@@ -1,0 +1,26 @@
+#spring.application.name=customerManagementModule
+spring:
+  application:
+    name: customerManagementModule
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 'Sanjeeva@123'
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+        # other h2 properties
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mvc:
+    view:
+      prefix: "/pages/"
+      suffix: ".jsp"
+server:
+  port: 8081
