@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Management - Your Trusted Partner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="path/to/your/font-awesome-folder/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://source.unsplash.com/1600x900/?bank,money,loan') no-repeat center center/cover;
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+        }
+        .loan-card {
+            border-radius: 0.8rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .loan-header {
+            background: #f1f5fb;
+            padding: 1rem;
+            border-radius: 0.8rem 0.8rem 0 0;
+        }
+        .loan-header h5 {
+            margin: 0;
+            font-weight: bold;
+        }
+        .loan-rate {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0056b3;
+        }
+        .btn-details {
+            background: #0d6efd;
+            color: white;
+        }
+        .btn-apply {
+            background: #198754;
+            color: white;
+        }
+        .modal-header {
+            background: #f1f5fb;
+            border-bottom: none;
+        }
+        .modal-title {
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            color: #0056b3;
+        }
+        .list-unstyled li::before {
+            content: "✓ ";
+            color: #198754;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">LoanWise Bank</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#loan-types">Loan Types</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about-us">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <button class="btn btn-outline-light me-2" type="button" onclick="location.href='/login'">Login</button>
+                <button class="btn btn-primary" type="button" onclick="location.href='/register'">Register</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-section">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Your Financial Journey Starts Here</h1>
+        <p class="lead mt-3">Secure the funds you need with transparent and flexible loan solutions.</p>
+        <a href="#loan-types" class="btn btn-primary btn-lg mt-4">Explore Loan Options</a>
+    </div>
+</section>
+
+<section id="loan-types" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4 fw-bold">Discover Our Loan Products</h2>
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="loan-card bg-white p-3 h-100">
+                    <div class="loan-header">
+                        <h5><i class="fas fa-user me-2"></i>Personal Loan</h5>
+                        <p class="loan-rate">8.5% P.A.</p>
+                    </div>
+                    <p class="mt-3">Flexible personal loans for various needs.</p>
+                    <div class="d-flex justify-content-between">
+                        <small><strong>Loan Amount:</strong> $5,000 - $50,000</small>
+                        <small><strong>Max Tenure:</strong> 60 months</small>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-details w-50" data-bs-toggle="modal" data-bs-target="#personalLoanModal">Details</button>
+                        <button class="btn btn-apply w-50" onclick="(location.href='/login')">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="loan-card bg-white p-3 h-100">
+                    <div class="loan-header">
+                        <h5><i class="fas fa-home me-2"></i>Home Loan</h5>
+                        <p class="loan-rate">6.5% P.A.</p>
+                    </div>
+                    <p class="mt-3">Low interest home loans with flexible terms.</p>
+                    <div class="d-flex justify-content-between">
+                        <small><strong>Loan Amount:</strong> $100,000 - $1,000,000</small>
+                        <small><strong>Max Tenure:</strong> 360 months</small>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-details w-50" data-bs-toggle="modal" data-bs-target="#homeLoanModal">Details</button>
+                        <button class="btn btn-apply w-50" onclick="(location.href='/login')">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="loan-card bg-white p-3 h-100">
+                    <div class="loan-header">
+                        <h5><i class="fas fa-car me-2"></i>Vehicle Loan</h5>
+                        <p class="loan-rate">7.2% P.A.</p>
+                    </div>
+                    <p class="mt-3">Finance your dream car with less rates.</p>
+                    <div class="d-flex justify-content-between">
+                        <small><strong>Loan Amount:</strong> $10,000 - $75,000</small>
+                        <small><strong>Max Tenure:</strong> 84 months</small>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-details w-50" data-bs-toggle="modal" data-bs-target="#vehicleLoanModal">Details</button>
+                        <button class="btn btn-apply w-50" onclick="(location.href='/login')">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about-us" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">About LoanWise Bank</h2>
+        <p class="text-center lead">
+            At LoanWise Bank, we are committed to providing innovative and customer-centric financial solutions. With years of experience and a dedication to service, we empower individuals and businesses to achieve their financial goals. Our mission is to make banking simple, secure, and accessible for everyone.
+        </p>
+    </div>
+</section>
+
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <p class="lead">Have questions or need assistance? Reach out to our friendly team.</p>
+                <p>Email: <a href="mailto:info@loanwisebank.com">info@loanwisebank.com</a></p>
+                <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <address>
+                    123 Loan Street, Financial District, City, Country
+                </address>
+                <a href="#" class="btn btn-primary mt-3">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white text-center py-4">
+    <div class="container">
+        <p class="mb-0">&copy; 2023 LoanWise Bank. All rights reserved.</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="personalLoanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title">Personal Loan Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-user me-2"></i>Personal Loan</h6>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-primary">8.5% per annum</h4>
+                                <p class="text-muted">Flexible personal loans for various needs.</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Min Amount:</strong><br>
+                                        <span class="text-success">$5,000.00</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Max Amount:</strong><br>
+                                        <span class="text-success">$50,000.00</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Max Tenure:</strong><br>
+                                        <span class="text-info">60 months</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Processing Fee:</strong><br>
+                                        <span class="text-warning">1% of loan amount</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-list-check me-2"></i>Features &amp; Benefits</h6>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <span>
+                                        <i class="fa-solid fa-check" style="color: #198754;"></i>&nbsp; <span>Quick approval process</span>
+                                    </span><br/>
+                                    <span>
+                                        <i class="fa-solid fa-check" style="color: #198754;"></i>&nbsp; <span>No collateral required</span>
+                                    </span><br/>
+                                    <span>
+                                        <i class="fa-solid fa-check" style="color: #198754;"></i>&nbsp; <span>Flexible repayment options</span>
+                                    </span><br/>
+                                    <span>
+                                        <i class="fa-solid fa-check" style="color: #198754;"></i>&nbsp; <span>Competitive interest rates</span>
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-user-check me-2"></i>Eligibility Criteria</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>Minimum credit score 650, stable income required</p>
+                                <div>
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Age: 21-60 years
+                                    </span><br/>
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Good credit history
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-file-alt me-2"></i>Required Documents</h6>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Identity proof
+                                    </span><br/>
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Income documents
+                                    </span><br/>
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Bank statements
+                                    </span><br/>
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Address proof
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="(location.href='/login')">
+                    <i class="fas fa-file-alt me-2"></i>Apply Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="homeLoanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title">Home Loan Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-home me-2"></i>Home Loan</h6>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-primary">6.5% per annum</h4>
+                                <p class="text-muted">Low interest home loans with flexible terms</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Min Amount:</strong><br>
+                                        <span class="text-success">$100,000.00</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Max Amount:</strong><br>
+                                        <span class="text-success">$1,000,000.00</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Max Tenure:</strong><br>
+                                        <span class="text-info">360 months</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Processing Fee:</strong><br>
+                                        <span class="text-warning">0.5% of loan amount</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-list-check me-2"></i>Features &amp; Benefits</h6>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Tax benefits available
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Long repayment tenure
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Property insurance included
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Top-up loan facility
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-user-check me-2"></i>Eligibility Criteria</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>Minimum credit score 700, property evaluation required</p>
+                                <div>
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Age: 21-65 years
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Regular source of income
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Good credit history
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-file-alt me-2"></i>Required Documents</h6>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Identity and address proof
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Income documents
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Property documents
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Bank statements (6 months)
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Property valuation report
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="(location.href='/login')">
+                    <i class="fas fa-file-alt me-2"></i>Apply Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vehicleLoanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title">Vehicle Loan Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-car me-2"></i>Vehicle Loan</h6>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-primary">7.2% per annum</h4>
+                                <p class="text-muted">Finance your dream car with less rates.</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Min Amount:</strong><br>
+                                        <span class="text-success">$10,000.00</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Max Amount:</strong><br>
+                                        <span class="text-success">$75,000.00</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Max Tenure:</strong><br>
+                                        <span class="text-info">84 months</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Processing Fee:</strong><br>
+                                        <span class="text-warning">0.75% of loan amount</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-list-check me-2"></i>Features &amp; Benefits</h6>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Up to 90% financing
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Quick processing
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Insurance tie-ups
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Flexible down payment
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-user-check me-2"></i>Eligibility Criteria</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>Minimum credit score 600, stable employment required</p>
+                                <div>
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Valid driving license
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-check text-success me-2"></i>Good repayment history
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6><i class="fas fa-file-alt me-2"></i>Required Documents</h6>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Identity proof
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Vehicle documents
+                                    </span><br/>
+
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Income proof
+                                    </span><br/>
+                                    
+                                    <span>
+                                        <i class="fas fa-file text-info me-2"></i>Bank statements
+                                    </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="(location.href='/login')">
+                    <i class="fas fa-file-alt me-2"></i>Apply Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

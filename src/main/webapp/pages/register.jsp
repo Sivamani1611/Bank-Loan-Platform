@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register with LoanWise Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for consistency */
+        }
+        .register-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="registerPage" class="container-fluid vh-100">
+        <div class="row h-100">
+            <!-- Left Side - Branding -->
+            <div class="col-lg-6 d-none d-lg-flex bg-success text-white flex-column justify-content-center align-items-center">
+                <div class="text-center">
+                    <i class="fas fa-user-plus fa-5x mb-4"></i>
+                    <h1 class="display-4 fw-bold mb-3">Join SecureBank</h1>
+                    <p class="lead">Create your account and start managing loans</p>
+                    <div class="row mt-5">
+                        <div class="col-4">
+                            <div class="feature-box">
+                                <i class="fas fa-rocket fa-2x mb-2"></i>
+                                <h6>Quick Setup</h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="feature-box">
+                                <i class="fas fa-handshake fa-2x mb-2"></i>
+                                <h6>Trusted</h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="feature-box">
+                                <i class="fas fa-clock fa-2x mb-2"></i>
+                                <h6>24/7 Support</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side - Register Form -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                <div class="w-100" style="max-width: 450px;">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                                <h3 class="card-title">Create Your Account</h3>
+                                <p class="text-muted">Fill in your details to get started.</p>
+                            </div>
+                            
+                            <form id="registerForm" onsubmit="(handleRegisterFormSubmit(event))">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label for="fullname" class="form-label">Enter Full Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <input type="text" class="form-control" id="fullname" required placeholder="Full name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="registerEmail" class="form-label">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="registerEmail" required placeholder="Enter email address">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" id="registerAddress" required cols="20" rows="5"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="registerPhone" class="form-label">Phone Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        <input type="tel" class="form-control" id="registerPhone" required placeholder="Enter phone number">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="accountType" class="form-label">KYC Status</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                        <select class="form-control" id="kycStatus" required>
+                                            <option value="">Select KYC Status</option>
+                                            <option value="PENDING">PENDING</option>
+                                            <option value="COMPLETED">COMPLETED</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="registerPassword" class="form-label">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="registerPasswordField" required minlength="6" onkeyup="(validatePassword(('registerPasswordField')))">
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleRegisterPasswordBtn" onclick="(togglePasswordVisibility('toggleRegisterPasswordBtn', 'registerPasswordField'))">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted">
+                                        <span id="passwordSpanTag"></span>
+                                    </small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="registerConfirmPasswordField" required minlength="6" onkeyup="(matchPassword(('registerConfirmPasswordField'), ('registerPasswordField')))">
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleRegisterConfirmPassword" onclick="(togglePasswordVisibility('toggleRegisterConfirmPassword', 'registerConfirmPasswordField'))">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted" id="confirmPasswordTag"></small>
+                                </div>
+                                
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                                    <label class="form-check-label" for="acceptTerms">
+                                        I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-success w-100 mb-3">
+                                    <i class="fas fa-user-plus me-2"></i>Create Account
+                                </button>
+                                
+                                <div class="text-center">
+                                    <p class="mb-0">Already have an account? <a style="cursor: pointer;" class="text-decoration-none" onclick="(location.href='/login')">Sign in here</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/registerUser.js"></script>
+</body>
+</html>

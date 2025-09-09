@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        .dropdown-menu {
+            /* This is the key fix: it prevents the dropdown from expanding the navbar. */
+            min-width: 0;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div id="loginPage" class="container-fluid vh-100">
+        <div class="row h-100">
+            <div class="col-lg-6 d-none d-lg-flex bg-primary text-white flex-column justify-content-center align-items-center">
+                <div class="text-center">
+                    <i class="fas fa-university fa-5x mb-4"></i>
+                    <h1 class="display-4 fw-bold mb-3">SecureBank</h1>
+                    <p class="lead">Professional Loan Management System</p>
+                    <div class="row mt-5">
+                        <div class="col-4">
+                            <div class="feature-box">
+                                <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                                <h6>Secure</h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="feature-box">
+                                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                <h6>Analytics</h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="feature-box">
+                                <i class="fas fa-users fa-2x mb-2"></i>
+                                <h6>Customer Focused</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                <div class="w-100" style="max-width: 400px;">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-university fa-3x text-primary mb-3"></i>
+                                <h3 class="card-title">Login to Your Account</h3>
+                                <p class="text-muted">Welcome back! Please enter your details.</p>
+                            </div>
+                            
+                            <form id="loginForm" onsubmit="(handleLoginFormSubmit(event))">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" class="form-control" id="email" required placeholder="Enter your email">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="loginPasswordField" required>
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleLoginPasswordBtn" onclick="(togglePasswordVisibility('toggleLoginPasswordBtn', 'loginPasswordField'))">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <span id="credentialsError"></span>
+                                </div>
+                                
+                                <!-- <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div> -->
+                                
+                                <button type="submit" class="btn btn-primary w-100 mb-3">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    Sign In
+                                </button>
+                                
+                                <div class="text-center">
+                                    <a style="cursor: pointer;" class="text-decoration-none" onclick="(location.href='/resetPassword')">Forgot Password?</a>
+                                </div>
+                                
+                                <div class="text-center mt-3">
+                                    <p class="mb-0">Don't have an account? <a style="cursor: pointer;" class="text-decoration-none" onclick="(location.href='/register')">Sign up here</a></p>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/loginUser.js"></script>
+
+</body>
+</html>
