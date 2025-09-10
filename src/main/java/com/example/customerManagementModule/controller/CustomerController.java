@@ -19,6 +19,7 @@ public class CustomerController {
         return ResponseEntity.ok().body(customerService.saveCustomer(customer));
     }
 
+
     @GetMapping("/retrieve/{email}")
     public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email) {
         return ResponseEntity.ok().body(customerService.findCustomerByEmail(email));
