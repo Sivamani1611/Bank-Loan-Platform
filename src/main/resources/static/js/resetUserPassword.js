@@ -6,8 +6,7 @@ async function handleResetFormSubmit(event) {
 
     const email = resetForm.elements.resetEmail.value;
     const password = resetForm.elements.resetPasswordField.value;
-    
-    console.log(email, password);
+
 
     const getEndpoint = "/api/user/retrieve/" + email;
 
@@ -15,7 +14,10 @@ async function handleResetFormSubmit(event) {
 
     const userObj = await fetchRequest(getEndpoint, getUserOptions);
 
-    console.log(userObj);
+    if(!userObj) {
+        alert("Email ID Not Found!!!\nPlease enter valid Email...");
+        return;
+    }
     
     const modifiedUserObj = {...userObj, password};
 

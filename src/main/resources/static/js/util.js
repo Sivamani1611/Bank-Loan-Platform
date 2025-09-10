@@ -46,7 +46,7 @@ async function fetchRequest(endPoint = "", options = {method: "GET"}) {
 
 }
 
-async function checkIfUserExists(email = "") {
+async function checkIfUserExists(email = "", spanTag="", msg="") {
     const endPoint = "/api/customer/retrieve/" + email;
 
     const user = await fetchRequest(endPoint)
@@ -59,11 +59,13 @@ async function checkIfUserExists(email = "") {
     })
     .catch(err => console.error(err));
 
-    if(user !== null) {
+    if(user !== null && spanTag==="emailSpanTag") {
         console.log("User Found!");
-        document.getElementById("emailSpanTag").innerHTML = `<span class='text-danger'>Email ID already Exists.</span>&nbsp;<span class="text-danger">✗</span><br/>`;
+        document.getElementById(spanTag).innerHTML = `<span class='text-danger'>${msg}</span>&nbsp;<span class="text-danger">✗</span><br/>`;
+    } else if(user === null && spanTag==="resetEmailSpanTag") {
+        document.getElementById(spanTag).innerHTML = `<span class='text-danger'>${msg}</span>&nbsp;<span class="text-danger">✗</span><br/>`;
     } else {
-        document.getElementById("emailSpanTag").innerText = " ";
+        document.getElementById(spanTag).innerText = " ";
     }
 
     return user !== null;

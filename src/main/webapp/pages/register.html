@@ -91,7 +91,7 @@
                                     <label for="registerEmail" class="form-label">Email Address</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        <input type="email" class="form-control" id="registerEmail" required placeholder="Enter email address" onblur="(checkIfUserExists(event.target.value))">
+                                        <input type="email" class="form-control" id="registerEmail" required placeholder="Enter email address" onblur="(checkIfUserExists(event.target.value, 'emailSpanTag', 'Email Already Exists.'))">
                                     </div>
                                     <span id="emailSpanTag"></span>
                                 </div>
