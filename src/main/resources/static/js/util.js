@@ -29,14 +29,47 @@ function togglePasswordVisibility(toggleButtonId, passwordFieldId) {
     }
 }
 
-async function fetchRequest(endPoint = "", options = {}) {
+async function fetchRequest(endPoint = "", options = {method: "GET"}) {
     console.log(endPoint, options);
 
     const responseObj = await fetch(endPoint, options)
     .then(res => res.json())
     .then(data => data)
-    .catch(err => console.error(err));
+    .catch(err => {
+        if(err) {
+            return null;
+        }
+        console.error(err);
+    });
 
     return responseObj;
 
+}
+
+async function checkIfUserExists(email = "") {
+    const endPoint = "/api/customer/retrieve/" + email;
+
+    const user = await fetchRequest(endPoint)
+    .then(responseObj => {
+        if(responseObj === null) {
+            console.log("User not Created!");
+            return null
+        }
+        return responseObj;
+    })
+    .catch(err => console.error(err));
+
+    if(user !== null) {
+        console.log("User Found!");
+        document.getElementById("emailSpanTag").innerHTML = `<span class='text-danger'>Email ID already Exists.</span>&nbsp;<span class="text-danger">✗</span><br/>`;
+    } else {
+        document.getElementById("emailSpanTag").innerText = " ";
+    }
+
+    return user !== null;
+}
+
+
+function remove(tag) {
+    document.getElementById(tag).innerText = " ";
 }

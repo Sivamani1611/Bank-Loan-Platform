@@ -91,8 +91,9 @@
                                     <label for="registerEmail" class="form-label">Email Address</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        <input type="email" class="form-control" id="registerEmail" required placeholder="Enter email address">
+                                        <input type="email" class="form-control" id="registerEmail" required placeholder="Enter email address" onblur="(checkIfUserExists(event.target.value))">
                                     </div>
+                                    <span id="emailSpanTag"></span>
                                 </div>
 
                                 <div class="mb-3">
@@ -106,27 +107,24 @@
                                     <label for="registerPhone" class="form-label">Phone Number</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                        <input type="tel" class="form-control" id="registerPhone" required placeholder="Enter phone number">
+                                        <input type="tel" class="form-control" id="registerPhone" required placeholder="Enter phone number" onkeyup="(validatePhoneNumber(event.target.value))" onblur="(remove('phoneSpanTag'))">
                                     </div>
+                                    <span id="phoneSpanTag"></span>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="accountType" class="form-label">KYC Status</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                                        <select class="form-control" id="kycStatus" required>
-                                            <option value="">Select KYC Status</option>
-                                            <option value="PENDING">PENDING</option>
-                                            <option value="COMPLETED">COMPLETED</option>
-                                        </select>
+                                        <input type="text" class="form-control" name="kycStatus" id="kycStatus" value="PENDING" readonly>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="registerPassword" class="form-label">Password</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="password" class="form-control" id="registerPasswordField" required minlength="6" onkeyup="(validatePassword(('registerPasswordField')))">
+                                        <input type="password" class="form-control" id="registerPasswordField" required minlength="6" onkeyup="(validatePassword(('registerPasswordField')))" onblur="(remove('passwordSpanTag'))">
                                         <button class="btn btn-outline-secondary" type="button" id="toggleRegisterPasswordBtn" onclick="(togglePasswordVisibility('toggleRegisterPasswordBtn', 'registerPasswordField'))">
                                             <i class="fas fa-eye"></i>
                                         </button>
@@ -140,21 +138,23 @@
                                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="password" class="form-control" id="registerConfirmPasswordField" required minlength="6" onkeyup="(matchPassword(('registerConfirmPasswordField'), ('registerPasswordField')))">
+                                        <input type="password" class="form-control" id="registerConfirmPasswordField" required minlength="6" onkeyup="(matchPassword(('registerConfirmPasswordField'), ('registerPasswordField')))" onblur="remove('confirmPasswordTag')">
                                         <button class="btn btn-outline-secondary" type="button" id="toggleRegisterConfirmPassword" onclick="(togglePasswordVisibility('toggleRegisterConfirmPassword', 'registerConfirmPasswordField'))">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </div>
                                     <small class="text-muted" id="confirmPasswordTag"></small>
                                 </div>
-                                
+
                                 <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                                    <input type="checkbox" class="form-check-input" id="acceptTerms" required >
                                     <label class="form-check-label" for="acceptTerms">
                                         I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
                                     </label>
+                                    <small class="text-muted">
+                                        <span id="confirmPasswordTag"></span>
+                                    </small>
                                 </div>
-                                
                                 <button type="submit" class="btn btn-success w-100 mb-3">
                                     <i class="fas fa-user-plus me-2"></i>Create Account
                                 </button>

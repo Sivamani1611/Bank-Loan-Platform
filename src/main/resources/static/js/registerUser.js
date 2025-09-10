@@ -76,6 +76,35 @@ function matchPassword(currPasswordId, enteredPasswordId) {
     return currPassword === enteredPassword;
 }
 
+function validatePhoneNumber(phoneNumberText = "") {
+
+    const mobileSpanTag = document.getElementById("phoneSpanTag");
+
+    const mobileRegex =/^[6-9][0-9]{9}$/;
+
+    let htmlCode = '';
+
+    // Check if it starts with 6–9
+    if (/^[6-9]/.test(phoneNumberText)) {
+        htmlCode += `<span class='text-success'>Mobile number must start with 6-9.</span>&nbsp;<span class="text-success">✓</span><br/>`;
+    } else {
+        htmlCode += `<span class='text-danger'>Mobile number must start with 6-9.</span>&nbsp;<span class="text-danger">✗</span><br/>`;
+    }
+
+    //Check if the Mobile Number is must not contain text and it is 10-digit or not
+    if (/^[6-9][0-9]{9}$/.test(phoneNumberText)) {
+        htmlCode += `<span class='text-success'>Mobile number must be exactly 10 digits long.</span>&nbsp;<span class="text-success">✓</span><br/>`;
+    } else {
+        htmlCode += `<span class='text-danger'>Mobile number must be exactly 10 digits long.</span>&nbsp;<span class="text-danger">✗</span><br/>`;
+    }
+
+
+
+    mobileSpanTag.innerHTML = htmlCode;
+
+    return mobileRegex.test(phoneNumberText);
+}
+
 async function handleRegisterFormSubmit(event) {
     // This is the most important line. It stops the form's default behavior,
     // which is to reload the page.
@@ -95,6 +124,15 @@ async function handleRegisterFormSubmit(event) {
     
     const acceptTerms = form.elements.acceptTerms.checked;
 
+    const isUserExists = await checkIfUserExists(email);
+
+    console.log(isUserExists ? "User Exists": "User Exists");
+
+    if(isUserExists) {
+
+        alert("Email ID Already Exists!!!\nPlease Login...");
+        return;
+    }
 
     if(validatePassword("registerPasswordField") && matchPassword("registerConfirmPasswordField", "registerPasswordField") && acceptTerms) {
         
