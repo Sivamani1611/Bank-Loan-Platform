@@ -19,6 +19,8 @@ public class AuthenticateController {
 
     @Autowired
     private CustomerService customerService;
+
+
     @Autowired
     private PasswordService passwordService;
 
