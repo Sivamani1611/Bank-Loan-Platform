@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Applications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .status-badge { padding: 5px 10px; border-radius: 12px; font-size: 0.8rem; }
+        .status-pending { background: #ffeeba; color: #856404; }
+        .status-approved { background: #d4edda; color: #155724; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
+        .status-active { background: #cce5ff; color: #004085; }
+    </style>
+</head>
+<body class="bg-light">
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-university me-2"></i>SecureBank LMS
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link " href="#" onclick="showPage('dashboard')">
+                        <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                    </a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" onclick="showPage('customers')">-->
+<!--                        <i class="fas fa-users me-1"></i>Customers-->
+<!--                    </a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" onclick="showPage('loans')">
+                        <i class="fas fa-money-bill-wave me-1"></i>Loan Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showPage('applications')">
+                        <i class="fas fa-file-alt me-1"></i>Applications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showPage('calculator')">
+                        <i class="fas fa-calculator me-1"></i>EMI Calculator
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showPage('reports')">
+                        <i class="fas fa-chart-bar me-1"></i>Reports
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i><span id="userDisplayName">Customer</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="showProfile()">
+                            <i class="fas fa-user me-1"></i>Profile
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" onclick="showSettings()">
+                            <i class="fas fa-cog me-1"></i>Settings
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <div>
+                <h2><i class="fas fa-file-alt me-2"></i>Loan Applications</h2>
+                <p class="text-muted">Manage and process loan applications. Role: CUSTOMER</p>
+            </div>
+            <button class="btn btn-primary" onclick="alert('New Application Modal')">
+                <i class="fas fa-plus me-2"></i>New Application
+            </button>
+        </div>
+    </div>
+
+    <!-- Pending Approvals -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Pending Approvals</h5>
+                    <p class="mb-2">You have applications waiting for your approval.</p>
+                    <button class="btn btn-dark btn-sm" onclick="alert('Review Pending Applications')">
+                        <i class="fas fa-gavel me-1"></i>Review Pending (2)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card primary text-white bg-primary">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Total Applications</h6>
+                        <div class="h4">12</div>
+                    </div>
+                    <i class="fas fa-file-alt fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card bg-warning text-dark">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Pending Review</h6>
+                        <div class="h4">4</div>
+                    </div>
+                    <i class="fas fa-clock fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card bg-success text-white">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Approved</h6>
+                        <div class="h4">6</div>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card bg-info text-white">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Approved Amount</h6>
+                        <div class="h5">₹ 45,00,000</div>
+                    </div>
+                    <i class="fas fa-rupee-sign fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="row mb-4">
+        <div class="col-lg-3 mb-2">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search by ID">
+            </div>
+        </div>
+        <div class="col-lg-3 mb-2">
+            <select class="form-select">
+                <option value="">All Status</option>
+
+                <option>Approved</option>
+                <option>Rejected</option>
+                <option>Pending</option>
+
+            </select>
+        </div>
+        <div class="col-lg-3 mb-2">
+            <select class="form-select">
+                <option value="">All Types</option>
+                <option>Personal</option>
+                <option>Home</option>
+                <option>Vehicle</option>
+                <option>Business</option>
+                <option>Education</option>
+            </select>
+        </div>
+        <div class="col-lg-3 mb-2">
+            <input type="date" class="form-control">
+        </div>
+
+    </div>
+
+    <!-- Applications Table -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">My Applications</h5>
+            <div class="btn-group">
+                <button class="btn btn-outline-secondary btn-sm" onclick="alert('Export CSV')">
+                    <i class="fas fa-download me-1"></i>Export
+                </button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="alert('Refresh Table')">
+                    <i class="fas fa-sync me-1"></i>Refresh
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Application ID</th>
+<!--                        <th>Customer</th>-->
+                        <th>Loan Type</th>
+                        <th>Amount</th>
+                        <th>EMI</th>
+                        <th>Status</th>
+                        <th>Applied Date</th>
+                        <th>Overview</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>APP001</td>
+<!--                        <td>Rajesh Kumar-->
+<!--                            <small class="text-muted">rajesh@email.com</small></td>-->
+                        <td><i class="fas fa-user text-primary me-2"></i>Personal Loan</td>
+                        <td><b>₹ 3,00,000</b></td>
+                        <td>₹ 10,432</td>
+                        <td><span class="status-badge status-approved">APPROVED</span></td>
+                        <td>01-Mar-2024</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="alert('View Details APP001')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>APP002</td>
+<!--                        <td>Priya Sharma-->
+<!--                            <small class="text-muted">priya@email.com</small></td>-->
+                        <td><i class="fas fa-home text-success me-2"></i>Home Loan</td>
+                        <td><b>₹ 25,00,000</b></td>
+                        <td>₹ 23,850</td>
+                        <td><span class="status-badge status-pending">PENDING</span></td>
+                        <td>10-Mar-2024</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="alert('View Details APP002')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
