@@ -24,4 +24,15 @@ public class HtmlFileController {
 
     @GetMapping("/resetPassword")
     public ModelAndView showForgotPasswordPage() {return new ModelAndView("resetPassword");}
+
+    @GetMapping("/admin/dashboard")
+    public String showAdminDashboardPage() {
+        return "Admin Page";
+    }
+
+    @GetMapping("/customer/dashboard")
+    public String showCustomerDashboardPage() {
+        return "Customer Page";
+    }
+
 }
