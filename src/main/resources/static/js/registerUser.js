@@ -124,9 +124,9 @@ async function handleRegisterFormSubmit(event) {
     
     const acceptTerms = form.elements.acceptTerms.checked;
 
-    const isUserExists = await checkIfUserExists(email);
+    const isUserExists = await checkIfUserExists(email, "emailSpanTag", "Email Already Exists.");
 
-    console.log(isUserExists ? "User Exists": "User Exists");
+    console.log(isUserExists ? "User Exists": "User Not Exists");
 
     if(isUserExists) {
 

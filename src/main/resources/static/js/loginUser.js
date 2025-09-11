@@ -17,8 +17,8 @@ async function handleLoginFormSubmit(event) {
     const errorTag = document.getElementById("credentialsError");
 
     if(userObj !== null && password === userObj.password) {
-        console.log("User is Validated! Good to GO...");
-        alert("User is Validated! Good to GO...");
+        const endPoint = userObj.role === "customer" ? "customer/dashboard": "admin/dashboard";
+        await fetchRequest(endPoint, );
     } else {
         errorTag.innerHTML = "<span class='text-danger'>Invalid Login Credentials.</span>";
     }
