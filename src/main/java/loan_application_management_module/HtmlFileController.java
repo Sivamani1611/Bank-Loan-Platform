@@ -7,13 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class HtmlFileController {
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/loanApplication")
     public ModelAndView showAdminLoanAppPage() {
         return new ModelAndView("AdminLoanAppModule");
     }
 
-    @GetMapping("/customer")
+    @GetMapping("/customer/loanApplication")
     public ModelAndView showCustomerLoanAppPage() {
         return new ModelAndView("CustomerLoanApplicationModule");
     }
+
 }

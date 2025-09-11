@@ -33,11 +33,6 @@
                         <i class="fas fa-tachometer-alt me-1"></i>Dashboard
                     </a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#" onclick="showPage('customers')">-->
-<!--                        <i class="fas fa-users me-1"></i>Customers-->
-<!--                    </a>-->
-<!--                </li>-->
                 <li class="nav-item">
                     <a class="nav-link active" href="#" onclick="showPage('loans')">
                         <i class="fas fa-money-bill-wave me-1"></i>Loan Products
@@ -73,7 +68,7 @@
                             <i class="fas fa-cog me-1"></i>Settings
                         </a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" onclick="logout()">
+                        <li><a class="dropdown-item" href="#" onclick="(logout())">
                             <i class="fas fa-sign-out-alt me-1"></i>Logout
                         </a></li>
                     </ul>
@@ -215,47 +210,14 @@
                     <thead>
                     <tr>
                         <th>Application ID</th>
-<!--                        <th>Customer</th>-->
                         <th>Loan Type</th>
                         <th>Amount</th>
-                        <th>EMI</th>
                         <th>Status</th>
                         <th>Applied Date</th>
                         <th>Overview</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>APP001</td>
-<!--                        <td>Rajesh Kumar-->
-<!--                            <small class="text-muted">rajesh@email.com</small></td>-->
-                        <td><i class="fas fa-user text-primary me-2"></i>Personal Loan</td>
-                        <td><b>₹ 3,00,000</b></td>
-                        <td>₹ 10,432</td>
-                        <td><span class="status-badge status-approved">APPROVED</span></td>
-                        <td>01-Mar-2024</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary" onclick="alert('View Details APP001')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>APP002</td>
-<!--                        <td>Priya Sharma-->
-<!--                            <small class="text-muted">priya@email.com</small></td>-->
-                        <td><i class="fas fa-home text-success me-2"></i>Home Loan</td>
-                        <td><b>₹ 25,00,000</b></td>
-                        <td>₹ 23,850</td>
-                        <td><span class="status-badge status-pending">PENDING</span></td>
-                        <td>10-Mar-2024</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary" onclick="alert('View Details APP002')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
+                    <tbody id="loanAppTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -264,5 +226,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/util.js"></script>
+
+<script src="/js/customerLoanApp.js"></script>
 </body>
 </html>
