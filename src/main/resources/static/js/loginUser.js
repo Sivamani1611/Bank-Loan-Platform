@@ -13,12 +13,13 @@ async function handleLoginFormSubmit(event) {
     const userObj = await fetchRequest(endpoint, {method: "GET"});
 
     console.log(userObj);
-
     const errorTag = document.getElementById("credentialsError");
 
     if(userObj !== null && password === userObj.password) {
-        const endPoint = userObj.role === "customer" ? "customer/dashboard": "admin/dashboard";
-        await fetchRequest(endPoint, );
+        sessionStorage.setItem("role", userObj.role);
+        const endPoint = userObj.role === "customer" ? "customer/loanApplication": "admin/loanApplication";
+        location.href = endPoint;
+        sessionStorage.setItem("userEmail", userObj.email);
     } else {
         errorTag.innerHTML = "<span class='text-danger'>Invalid Login Credentials.</span>";
     }
