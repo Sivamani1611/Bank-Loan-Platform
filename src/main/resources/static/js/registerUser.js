@@ -169,6 +169,7 @@ async function handleRegisterFormSubmit(event) {
             name,
             email,
             password,
+            role: "customer",
             "customerId": customerObj.customerId
         }
 
