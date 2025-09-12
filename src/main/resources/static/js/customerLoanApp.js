@@ -190,3 +190,9 @@ async function fetchLoanApplicationsByString(value, query) {
     tbodyTag.innerHTML = htmlCode;
 
 }
+
+function setUserEmail(nameTag) {
+    console.log(document.getElementById(nameTag));
+    const email = sessionStorage.getItem('userEmail');
+    document.getElementById(nameTag).value = email;
+}
