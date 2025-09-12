@@ -88,8 +88,8 @@
                 <h2><i class="fas fa-file-alt me-2"></i>Loan Applications</h2>
                 <p class="text-muted">Manage and process loan applications. Role: CUSTOMER</p>
             </div>
-            <button class="btn btn-primary" onclick="alert('New Application Modal')">
-                <i class="fas fa-plus me-2"></i>New Application
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newApplicationModal">
+                <i class="fas fa-file-plus me-2"></i>New Loan Application
             </button>
         </div>
     </div>
@@ -221,6 +221,110 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" id="newApplicationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-file-plus me-2"></i>New Loan Application
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="applicationForm">
+                    <div class="row">
+                        <!-- Customer Selection -->
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="customerId" class="form-label">Select Customer *</label>
+                                <select class="form-select" id="customerId" required onchange="updateCustomerInfo()">
+                                    <option value="">Choose Customer</option>
+                                    ${customers.map(customer =>
+                                    `<option value="${customer.id}">${customer.firstName} ${customer.lastName} - ${customer.email}</option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Customer Info Display -->
+                        <div class="col-12" id="customerInfo" style="display: none;">
+                            <div class="alert alert-info">
+                                <div id="customerDetails"></div>
+                            </div>
+                        </div>
+
+                        <!-- Loan Product Selection -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="loanProductId" class="form-label">Loan Product *</label>
+                                <select class="form-select" id="loanProductId" required onchange="updateLoanInfo()">
+                                    <option value="">Choose Loan Product</option>
+                                    ${loans.map(loan =>
+                                    `<option value="${loan.id}" data-min="${loan.minAmount}" data-max="${loan.maxAmount}"
+                                             data-rate="${loan.interestRate}" data-tenure="${loan.maxTenure}">
+                                    ${loan.name} (${loan.interestRate}% p.a.)
+                                </option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Loan Amount -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="loanAmount" class="form-label">Loan Amount (₹) *</label>
+                                <input type="number" class="form-control" id="loanAmount" required
+                                       min="10000" max="50000000" oninput="calculateApplicationEMI()">
+                                <div class="form-text" id="amountLimits">Enter loan amount</div>
+                            </div>
+                        </div>
+
+                        <!-- Tenure -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="tenure" class="form-label">Tenure (Months) *</label>
+                                <input type="number" class="form-control" id="tenure" required
+                                       min="12" max="360" oninput="calculateApplicationEMI()">
+                                <div class="form-text" id="tenureLimits">Maximum tenure will be set based on loan product</div>
+                            </div>
+                        </div>
+
+                        <!-- Purpose -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="purpose" class="form-label">Loan Purpose *</label>
+                                <input type="text" class="form-control" id="purpose" required
+                                       placeholder="e.g., Home renovation, Vehicle purchase">
+                            </div>
+                        </div>
+
+                        <!-- EMI Display -->
+                        <div class="col-12">
+                            <div class="alert alert-primary" id="emiDisplay" style="display: none;">
+                                <h6>Calculated EMI: <span id="calculatedEMI">₹0</span></h6>
+                                <small>Interest Rate: <span id="appliedRate">0%</span> | Total Amount: <span id="totalPayment">₹0</span></small>
+                            </div>
+                        </div>
+
+                        <!-- Eligibility Check -->
+                        <div class="col-12" id="eligibilityCheck" style="display: none;">
+                            <div class="alert" id="eligibilityResult">
+                                <div id="eligibilityMessage"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitApplication()">
+                    <i class="fas fa-paper-plane me-2"></i>Submit Application
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
