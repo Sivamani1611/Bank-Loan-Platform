@@ -223,13 +223,8 @@
                         <!-- Customer Selection -->
                         <div class="col-12">
                             <div class="mb-3">
-                                <label for="customerId" class="form-label">Select Customer *</label>
-                                <select class="form-select" id="customerId" required onchange="updateCustomerInfo()">
-                                    <option value="">Choose Customer</option>
-                                    ${customers.map(customer =>
-                                    `<option value="${customer.id}">${customer.firstName} ${customer.lastName} - ${customer.email}</option>`
-                                    ).join('')}
-                                </select>
+                                <label for="customerName" class="form-label">Select Customer *</label>
+                                <input type="text" class="form-control" readonly id="customerName">
                             </div>
                         </div>
 
