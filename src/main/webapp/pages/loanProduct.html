@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SecureBank LMS - Loan Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        .stat-card {
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card .icon {
+            opacity: 0.6;
+        }
+
+        /* Hide the default checkbox for the custom switch */
+        .loan-switch input[type="checkbox"] {
+            display: none;
+        }
+
+        .loan-switch label {
+            cursor: pointer;
+            text-indent: -9999px;
+            width: 50px;
+            height: 28px;
+            background: #e5e7eb;
+            display: block;
+            border-radius: 99px;
+            position: relative;
+        }
+
+        /* The circular toggle button */
+        .loan-switch label:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 90px;
+            transition: 0.3s;
+        }
+
+        /* Toggled state styling */
+        .loan-switch input[type="checkbox"]:checked + label {
+            background: #22c55e;
+        }
+
+        .loan-switch input[type="checkbox"]:checked + label:after {
+            left: calc(100% - 2px);
+            transform: translateX(-100%);
+        }
+
+        /* New Card Styles */
+        .loan-card-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .loan-card-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        .loan-card-header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .loan-card-content {
+            padding: 1rem;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #2563eb;
+            transition: width 0.3s ease-in-out;
+        }
+        .progress-bar-interest {
+            background-color: #8b5cf6;
+        }
+        .loan-card-footer {
+            padding: 1rem;
+            background-color: #f8f8f8;
+            border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="min-h-screen flex flex-col items-center py-10 px-4">
+    <div class="w-full max-w-6xl space-y-8">
+        <div class="flex justify-between items-center pb-4 border-b border-gray-300">
+            <div class="flex flex-col">
+                <h1 class="text-3xl font-bold text-gray-800">Loan Products</h1>
+                <p class="text-gray-500">Manage and create new loan products</p>
+            </div>
+            <button id="addLoanButton" type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full shadow-lg transition-colors">
+                <i class="fas fa-plus mr-2"></i> Add New Loan
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div class="stat-card bg-blue-500 p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-lg">Total Loan Products</p>
+                    <h2 id="total-loans-count" class="text-3xl font-bold mt-1">...</h2>
+                </div>
+                <i class="fas fa-credit-card fa-3x icon"></i>
+            </div>
+            <div class="stat-card bg-purple-500 p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-lg">Total Users</p>
+                    <h2 id="total-users-count" class="text-3xl font-bold mt-1">...</h2>
+                </div>
+                <i class="fas fa-users fa-3x icon"></i>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Product List</h3>
+            <div id="loan-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p class="text-center text-gray-500 col-span-full">Loading loan products...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden" id="addLoanModal">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-[700px] shadow-lg rounded-md bg-white">
+        <div class="modal-content">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                <h5 class="text-lg font-bold">
+                    <i class="fas fa-plus mr-2"></i>Add New Loan Product
+                </h5>
+                <button type="button" class="text-gray-400 hover:text-gray-600" data-modal-close>
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="py-4">
+                <form id="loanProductForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="col-span-full">
+                            <h6 class="font-bold text-lg mb-3">Basic Information</h6>
+                        </div>
+
+                        <div>
+                            <label for="loanName" class="block text-sm font-medium text-gray-700">Product Name *</label>
+                            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="loanName" name="productName" required>
+                        </div>
+
+                        <div>
+                            <label for="loanType" class="block text-sm font-medium text-gray-700">Loan Type *</label>
+                            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="loanType" required>
+                                <option value="">Select Type</option>
+                                <option value="personal">Personal Loan</option>
+                                <option value="home">Home Loan</option>
+                                <option value="vehicle">Vehicle Loan</option>
+                                <option value="business">Business Loan</option>
+                                <option value="education">Education Loan</option>
+                            </select>
+                        </div>
+
+                        <div class="col-span-full">
+                            <label for="loanDescription" class="block text-sm font-medium text-gray-700">Description *</label>
+                            <textarea class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="loanDescription" rows="3" required></textarea>
+                        </div>
+
+                        <div class="col-span-full mt-3">
+                            <h6 class="font-bold text-lg mb-3">Financial Terms</h6>
+                        </div>
+
+                        <div>
+                            <label for="minAmount" class="block text-sm font-medium text-gray-700">Minimum Amount (₹) *</label>
+                            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="minAmount" name="minAmount" required min="1000">
+                        </div>
+
+                        <div>
+                            <label for="maxAmount" class="block text-sm font-medium text-gray-700">Maximum Amount (₹) *</label>
+                            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="maxAmount" name="maxAmount" required min="10000">
+                        </div>
+
+                        <div>
+                            <label for="intrestRate" class="block text-sm font-medium text-gray-700">Interest Rate (% p.a.) *</label>
+                            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="intrestRate" name="intrestRate" required min="1" max="50" step="0.1">
+                        </div>
+
+                        <div>
+                            <label for="tenure" class="block text-sm font-medium text-gray-700">Maximum Tenure (Months) *</label>
+                            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" id="tenure" name="tenure" required min="1" max="360">
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="loanProductId" name="loanProductId">
+                </form>
+            </div>
+            <div class="flex justify-end space-x-2 pt-4 border-t border-gray-200">
+                <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300" data-modal-close>Cancel</button>
+                <button type="submit" form="loanProductForm" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    <i class="fas fa-save mr-2"></i>Save Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden" id="messageModal">
+    <div class="modal-dialog relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="modal-content">
+            <div class="modal-header pb-3 border-b flex justify-between items-center">
+                <h5 class="modal-title font-bold text-lg">Notification</h5>
+                <button class="modal-close" data-modal-close-msg><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body py-4">
+                <p id="modal-message-text" class="text-gray-700"></p>
+            </div>
+            <div class="modal-footer flex justify-end">
+                <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" data-modal-close-msg>OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/loanProduct.js"></script>
+
+</body>
+</html>
