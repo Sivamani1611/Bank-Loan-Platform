@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SecureBank LMS - Loan Products</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -110,6 +111,60 @@
     </style>
 </head>
 <body class="bg-gray-100">
+
+<nav class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+        <a href="#" class="flex items-center text-lg font-bold">
+            <i class="fas fa-university mr-2"></i>SecureBank LMS
+        </a>
+
+        <button id="nav-toggle" class="md:hidden text-white focus:outline-none">
+            <i class="fas fa-bars fa-lg"></i>
+        </button>
+
+        <div id="nav-menu" class="hidden w-full md:flex md:w-auto md:items-center">
+            <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 md:ml-auto">
+                <li><a class="block py-2 hover:text-gray-300" href="#" onclick="showPage('dashboard')">
+                    <i class="fas fa-tachometer-alt mr-1"></i>Dashboard
+                </a></li>
+                <li><a class="block py-2 hover:text-gray-300" href="#" onclick="showPage('customers')">
+                    <i class="fas fa-users mr-1"></i>Customers
+                </a></li>
+                <li><a class="block py-2 hover:text-gray-300 font-bold" href="#" onclick="showPage('loans')">
+                    <i class="fas fa-money-bill-wave mr-1"></i>Loan Products
+                </a></li>
+                <li><a class="block py-2 hover:text-gray-300" href="#" onclick="showPage('applications')">
+                    <i class="fas fa-file-alt mr-1"></i>Applications
+                </a></li>
+                <li><a class="block py-2 hover:text-gray-300" href="#" onclick="showPage('calculator')">
+                    <i class="fas fa-calculator mr-1"></i>EMI Calculator
+                </a></li>
+                <li><a class="block py-2 hover:text-gray-300" href="#" onclick="showPage('reports')">
+                    <i class="fas fa-chart-bar mr-1"></i>Reports
+                </a></li>
+            </ul>
+
+            <div class="relative mt-4 md:mt-0 md:ml-8">
+                <button id="user-menu-button" class="flex items-center hover:text-gray-300 focus:outline-none">
+                    <i class="fas fa-user-circle mr-1"></i><span id="userDisplayName">Admin</span>
+                    <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 transform" id="chevron-icon"></i>
+                </button>
+                <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg py-1 hidden z-10">
+                    <a class="block px-4 py-2 hover:bg-gray-200" href="#" onclick="showProfile()">
+                        <i class="fas fa-user mr-1"></i>Profile
+                    </a>
+                    <a class="block px-4 py-2 hover:bg-gray-200" href="#" onclick="showSettings()">
+                        <i class="fas fa-cog mr-1"></i>Settings
+                    </a>
+                    <hr class="my-1 border-gray-200">
+                    <a class="block px-4 py-2 hover:bg-gray-200" href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
 
 <div class="min-h-screen flex flex-col items-center py-10 px-4">
     <div class="w-full max-w-6xl space-y-8">
@@ -246,6 +301,34 @@
 </div>
 
 <script src="/js/loanProduct.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+        const chevronIcon = document.getElementById('chevron-icon');
 
+        // Toggle mobile navigation menu
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+        });
+
+        // Toggle user dropdown menu
+        userMenuButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevents the document click event from firing immediately
+            userMenu.classList.toggle('hidden');
+            chevronIcon.classList.toggle('rotate-180');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
+                userMenu.classList.add('hidden');
+                chevronIcon.classList.remove('rotate-180');
+            }
+        });
+    });
+</script>
 </body>
 </html>
