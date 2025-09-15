@@ -14,7 +14,7 @@ public class LoanProduct {
 
     private String productName;
 
-    private Double intrestRate;
+    private Double interestRate;
 
     private Double minAmount;
 
@@ -35,12 +35,12 @@ public class LoanProduct {
         this.productName = productName;
     }
 
-    public Double getIntrestRate() {
-        return intrestRate;
+    public Double getInterestRate() {
+        return interestRate;
     }
 
-    public void setIntrestRate(Double intrestRate) {
-        this.intrestRate = intrestRate;
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
 
     public Double getMinAmount() {

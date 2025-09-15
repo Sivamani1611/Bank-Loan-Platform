@@ -37,7 +37,7 @@ public class LoanProductService {
         Optional<LoanProduct> presentLoanProduct = loanProductRepository.findByLoanProductId(loanProductId);
         LoanProduct originalLoanProduct = presentLoanProduct.get();
         originalLoanProduct.setProductName(updatedLoanProduct.getProductName());
-        originalLoanProduct.setIntrestRate(updatedLoanProduct.getIntrestRate());
+        originalLoanProduct.setInterestRate(updatedLoanProduct.getInterestRate());
         originalLoanProduct.setTenure(updatedLoanProduct.getTenure());
         originalLoanProduct.setMaxAmount(updatedLoanProduct.getMaxAmount());
         originalLoanProduct.setMinAmount(updatedLoanProduct.getMinAmount());

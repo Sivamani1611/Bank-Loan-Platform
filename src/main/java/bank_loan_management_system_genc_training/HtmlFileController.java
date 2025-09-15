@@ -40,4 +40,13 @@ public class HtmlFileController {
         return new ModelAndView("CustomerLoanProductModule");
     }
 
+    @GetMapping("/repayment")
+    public  ModelAndView showReportsPage() {
+        return new ModelAndView("repayment");
+    }
+
+    @GetMapping("/reports")
+    public  ModelAndView showRepaymentPage() {
+        return new ModelAndView("reports");
+    }
 }
