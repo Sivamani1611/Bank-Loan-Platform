@@ -20,10 +20,8 @@ window.onload = async function () {
     }
 };
 
-
 async function setCustomerLoanApplications() {
     loanApplicationsList = await fetchLoanApplicationsForCustomer();
-    sessionStorage.setItem("customerLoanApps", JSON.stringify(loanApplicationsList));
 
     setTimeout(() => {
         insertTableData();
@@ -86,11 +84,11 @@ function insertApprovalStatusClassName(approvalStatus) {
     return "status-rejected";
 }
 
-async function renderTableData(loanApplicationsList) {
+async function renderTableData(loanAppsList) {
 
         let htmlCode = ``;
 
-        loanApplicationsList.forEach((loanApplication, index) => {
+        loanAppsList.forEach((loanApplication, index) => {
             const loanProductName = (getLoanProductName(loanProductsList, loanApplication.loanProductId));
             const toolTip = loanProductName === "Unknown" ? "This product might have been deleted by the Admin." : "";
             htmlCode += `
@@ -130,7 +128,6 @@ async function insertTableData() {
 }
 
 function insertDataIntoStats() {
-    const loanApplicationsList = JSON.parse(sessionStorage.getItem("customerLoanApps"));
     const totalLoanAppsCount = loanApplicationsList.length;
 
     const totalPendingLoanApplications = loanApplicationsList.filter((loanApplication) => loanApplication.approvalStatus === "PENDING").length;
@@ -256,13 +253,6 @@ async function fetchLoanApplicationsForCustomer() {
 
     return loanApplicationsObj.listOfLoanApplications;
 
-}
-
-function logout() {
-    sessionStorage.removeItem("userEmail");
-    sessionStorage.removeItem("customerLoanApps");
-    sessionStorage.removeItem("role");
-    location.href = "/login";
 }
 
 function setUserEmail(nameTag) {

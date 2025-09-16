@@ -97,6 +97,12 @@ function remove(tag) {
     document.getElementById(tag).innerText = " ";
 }
 
+function logout() {
+    sessionStorage.removeItem("userEmail");
+    sessionStorage.removeItem("role");
+    location.href = "/login";
+}
+
 function generateDate() {
     const today = new Date();
 
@@ -110,4 +116,12 @@ function generateDate() {
     console.log("The formatted date is: " + applicationDate);
 
     return applicationDate;
+}
+
+function validateUserRole() {
+    const userRole = sessionStorage.getItem('userRole');
+    if(userRole !== "admin") {
+        alert("You don't have authorization to access this page!!!\nPlease login with an Admin account...");
+        location.href = "/login";
+    }
 }

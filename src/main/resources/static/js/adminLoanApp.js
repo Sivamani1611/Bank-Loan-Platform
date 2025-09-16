@@ -1,4 +1,5 @@
 async function loadDashboardData() {
+    document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
     try {
         const response = await fetch('/api/admin/loanApplications');
         if (!response.ok) {

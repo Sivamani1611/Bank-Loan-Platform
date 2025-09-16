@@ -14,14 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     validateUserRole();
 });
 
-function validateUserRole() {
-    const userRole = sessionStorage.getItem('userRole');
-    if(userRole !== "admin") {
-        alert("You don't have authorization to access this page!!!\nPlease login with an Admin account...");
-        location.href = "/login";
-    }
-}
-
 function showMessage(message) {
     messageModalText.textContent = message;
     messageModal.classList.remove('hidden');
