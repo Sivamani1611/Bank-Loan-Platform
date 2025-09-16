@@ -8,6 +8,12 @@ window.onload = async function () {
     loanProductsList = loanProductsList.loanProduct;
     insertProductsIntoSelectTag("filterByProductSelectTag");
     insertTableData();
+
+    const role = sessionStorage.getItem("role");
+    if(role === null || role !== "customer") {
+        alert("You are unable to access this page!\nPlease login as Customer to access this page.");
+        location.href = "/login";
+    }
 };
 
 setTimeout(() => insertDataIntoStats(), 100);
