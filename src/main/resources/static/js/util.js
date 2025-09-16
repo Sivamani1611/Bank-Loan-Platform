@@ -79,14 +79,17 @@ function insertLoanProductIcon(loanProducts, loanProductId) {
         return "car";
     } else if(loanProductName.toLowerCase().includes("student") || loanProductName.toLowerCase().includes("education")) {
         return "graduation-cap";
+    } else if(loanProductName.toLowerCase().includes("unknown")) {
+        return "question";
     }
     return "briefcase";
 }
 
 function getLoanProductName(loanProducts, loanProductId) {
-    console.log(loanProducts);
     const loanProductObj = loanProducts.filter((loanProduct) => loanProduct.loanProductId === Number(loanProductId))[0];
-    console.log(loanProductObj);
+    if(!loanProductObj) {
+        return "Unknown";
+    }
     return loanProductObj.productName;
 }
 

@@ -15,266 +15,266 @@
 </head>
 <body class="bg-light">
 
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-university me-2"></i>SecureBank LMS
-            </a>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-university me-2"></i>SecureBank LMS
+        </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link " href="/customer/dashboard">
+                        <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/loanProduct">
+                        <i class="fas fa-money-bill-wave me-1"></i>Loan Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/customer/loanApplication">
+                        <i class="fas fa-file-alt me-1"></i>Applications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showPage('calculator')">
+                        <i class="fas fa-calculator me-1"></i>EMI Calculator
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="">
+                        <i class="fas fa-chart-bar me-1"></i>Reports
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i><span id="userDisplayName">Customer</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="showProfile()">
+                            <i class="fas fa-user me-1"></i>Profile
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" onclick="showSettings()">
+                            <i class="fas fa-cog me-1"></i>Settings
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="(logout())">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <div>
+                <h2><i class="fas fa-file-alt me-2"></i>Loan Applications</h2>
+                <p class="text-muted">Manage and process loan applications. Role: CUSTOMER</p>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newApplicationModal" onclick="(setUserEmail('customerEmail'))">
+                <i class="fas fa-plus me-2"></i>New Loan Application
             </button>
+        </div>
+    </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link " href="/customer/dashboard">
-                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/customer/loanProduct">
-                            <i class="fas fa-money-bill-wave me-1"></i>Loan Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/customer/loanApplication">
-                            <i class="fas fa-file-alt me-1"></i>Applications
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showPage('calculator')">
-                            <i class="fas fa-calculator me-1"></i>EMI Calculator
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="">
-                            <i class="fas fa-chart-bar me-1"></i>Reports
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i><span id="userDisplayName">Customer</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="showProfile()">
-                                <i class="fas fa-user me-1"></i>Profile
-                            </a></li>
-                            <li><a class="dropdown-item" href="#" onclick="showSettings()">
-                                <i class="fas fa-cog me-1"></i>Settings
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="(logout())">
-                                <i class="fas fa-sign-out-alt me-1"></i>Logout
-                            </a></li>
-                        </ul>
-                    </li>
-                </ul>
+    <!-- Stats -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card primary text-white bg-primary">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Total Applications</h6>
+                        <div class="h4" id="totalAppsTag"></div>
+                    </div>
+                    <i class="fas fa-file-alt fa-2x"></i>
+                </div>
             </div>
         </div>
-    </nav>
-
-    <div class="container py-4">
-
-        <!-- Header -->
-        <div class="row mb-4">
-            <div class="col-12 d-flex justify-content-between align-items-center">
-                <div>
-                    <h2><i class="fas fa-file-alt me-2"></i>Loan Applications</h2>
-                    <p class="text-muted">Manage and process loan applications. Role: CUSTOMER</p>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card bg-warning text-dark">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Pending Review</h6>
+                        <div class="h4" id="pendingAppsTag"></div>
+                    </div>
+                    <i class="fas fa-clock fa-2x"></i>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newApplicationModal" onclick="(setUserEmail('customerEmail'))">
-                    <i class="fas fa-plus me-2"></i>New Loan Application
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card bg-success text-white">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Approved</h6>
+                        <div class="h4" id="approvedAppsTag"></div>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card stat-card bg-info text-white">
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <h6>Approved Amount</h6>
+                        <div class="h5">₹ <span id="totalApprovedAmountTag"></span></div>
+                    </div>
+                    <i class="fas fa-rupee-sign fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="row mb-4">
+        <div class="col-lg-3 mb-2">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search by ID" onkeyup="(fetchLoanApplicationsById(event.target.value))">
+            </div>
+        </div>
+        <div class="col-lg-3 mb-2">
+            <select class="form-select" onchange="(fetchLoanApplicationsByString(event.target.value, 'approvalStatus'))">
+                <option value="">All Status</option>
+                <option value="APPROVED">Approved</option>
+                <option value="REJECTED">Rejected</option>
+                <option value="PENDING">Pending</option>
+            </select>
+        </div>
+        <div class="col-lg-3 mb-2">
+            <select class="form-select" id="filterByProductSelectTag" onchange="(fetchLoanApplicationsByString(event.target.value, 'productType'))">
+                <option value="" selected>All Products</option>
+            </select>
+        </div>
+        <div class="col-lg-3 mb-2">
+            <input type="date" class="form-control" onchange="(fetchLoanApplicationsByString(event.target.value, 'date'))">
+        </div>
+
+    </div>
+
+    <!-- Applications Table -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">My Applications</h5>
+            <div class="btn-group">
+                <button class="btn btn-outline-secondary btn-sm" onclick="alert('Export CSV')">
+                    <i class="fas fa-download me-1"></i>Export
+                </button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="alert('Refresh Table')">
+                    <i class="fas fa-sync me-1"></i>Refresh
                 </button>
             </div>
         </div>
-
-        <!-- Stats -->
-        <div class="row mb-4">
-            <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stat-card primary text-white bg-primary">
-                    <div class="card-body d-flex justify-content-between">
-                        <div>
-                            <h6>Total Applications</h6>
-                            <div class="h4" id="totalAppsTag"></div>
-                        </div>
-                        <i class="fas fa-file-alt fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stat-card bg-warning text-dark">
-                    <div class="card-body d-flex justify-content-between">
-                        <div>
-                            <h6>Pending Review</h6>
-                            <div class="h4" id="pendingAppsTag"></div>
-                        </div>
-                        <i class="fas fa-clock fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stat-card bg-success text-white">
-                    <div class="card-body d-flex justify-content-between">
-                        <div>
-                            <h6>Approved</h6>
-                            <div class="h4" id="approvedAppsTag"></div>
-                        </div>
-                        <i class="fas fa-check-circle fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stat-card bg-info text-white">
-                    <div class="card-body d-flex justify-content-between">
-                        <div>
-                            <h6>Approved Amount</h6>
-                            <div class="h5">₹ <span id="totalApprovedAmountTag"></span></div>
-                        </div>
-                        <i class="fas fa-rupee-sign fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Filters -->
-        <div class="row mb-4">
-            <div class="col-lg-3 mb-2">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search by ID" onkeyup="(fetchLoanApplicationsById(event.target.value))">
-                </div>
-            </div>
-            <div class="col-lg-3 mb-2">
-                <select class="form-select" onchange="(fetchLoanApplicationsByString(event.target.value, 'approvalStatus'))">
-                    <option value="">All Status</option>
-                    <option value="APPROVED">Approved</option>
-                    <option value="REJECTED">Rejected</option>
-                    <option value="PENDING">Pending</option>
-                </select>
-            </div>
-            <div class="col-lg-3 mb-2">
-                <select class="form-select" id="filterByProductSelectTag" onchange="(fetchLoanApplicationsByString(event.target.value, 'productType'))">
-                    <option value="" selected>All Products</option>
-                </select>
-            </div>
-            <div class="col-lg-3 mb-2">
-                <input type="date" class="form-control" onchange="(fetchLoanApplicationsByString(event.target.value, 'date'))">
-            </div>
-
-        </div>
-
-        <!-- Applications Table -->
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">My Applications</h5>
-                <div class="btn-group">
-                    <button class="btn btn-outline-secondary btn-sm" onclick="alert('Export CSV')">
-                        <i class="fas fa-download me-1"></i>Export
-                    </button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="alert('Refresh Table')">
-                        <i class="fas fa-sync me-1"></i>Refresh
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Application ID</th>
-                            <th>Loan Type</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Applied Date</th>
-                            <th>Overview</th>
-                        </tr>
-                        </thead>
-                        <tbody id="loanAppTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="modal fade" id="newApplicationModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fas fa-file-plus me-2"></i>New Loan Application
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loanApplicationForm" onsubmit="(handleLoanApplicationFormSubmit(event))">
-                        <div class="row">
-                            <!-- Customer Selection -->
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="customerEmail" class="form-label">Customer Email</label>
-                                    <input type="text" class="form-control" readonly id="customerEmail">
-                                </div>
-                            </div>
-
-                            <!-- Loan Product Selection -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="loanProductId" class="form-label">Loan Product *</label>
-                                    <select class="form-select" id="loanProductId" required>
-                                        <option value="" selected>-- Select Product Type --</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Loan Amount -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="loanAmount" class="form-label">Loan Amount (₹) *</label>
-                                    <input type="number" class="form-control" id="loanAmount" required
-                                           min="10000" max="50000000">
-                                    <div class="form-text" id="amountLimits">Enter loan amount</div>
-                                </div>
-                            </div>
-
-                            <!-- Tenure -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="tenure" class="form-label">Tenure (Months) *</label>
-                                    <input type="number" class="form-control" id="tenure" required
-                                           min="12" max="360">
-                                    <div class="form-text" id="tenureLimits">Maximum tenure will be set based on loan product</div>
-                                </div>
-                            </div>
-
-                            <!-- Purpose -->
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="purpose" class="form-label">Loan Purpose *</label>
-                                    <input type="text" class="form-control" id="purpose" required
-                                           placeholder="e.g., Home renovation, Vehicle purchase">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane me-2"></i>Submit Application
-                            </button>
-                        </div>
-                    </form>
-                </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Application ID</th>
+                        <th>Loan Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Applied Date</th>
+                        <th>Overview</th>
+                    </tr>
+                    </thead>
+                    <tbody id="loanAppTableBody"></tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/util.js"></script>
-    <script src="/js/customerLoanApp.js"></script>
+</div>
+
+<div class="modal fade" id="newApplicationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-file-plus me-2"></i>New Loan Application
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loanApplicationForm" onsubmit="(handleLoanApplicationFormSubmit(event))">
+                    <div class="row">
+                        <!-- Customer Selection -->
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="customerEmail" class="form-label">Customer Email</label>
+                                <input type="text" class="form-control" readonly id="customerEmail">
+                            </div>
+                        </div>
+
+                        <!-- Loan Product Selection -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="loanProductId" class="form-label">Loan Product *</label>
+                                <select class="form-select" id="loanProductId" required>
+                                    <option value="" selected>-- Select Product Type --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Loan Amount -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="loanAmount" class="form-label">Loan Amount (₹) *</label>
+                                <input type="number" class="form-control" id="loanAmount" required
+                                       min="10000" max="50000000">
+                                <div class="form-text" id="amountLimits">Enter loan amount</div>
+                            </div>
+                        </div>
+
+                        <!-- Tenure -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="tenure" class="form-label">Tenure (Months) *</label>
+                                <input type="number" class="form-control" id="tenure" required
+                                       min="12" max="360">
+                                <div class="form-text" id="tenureLimits">Maximum tenure will be set based on loan product</div>
+                            </div>
+                        </div>
+
+                        <!-- Purpose -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="purpose" class="form-label">Loan Purpose *</label>
+                                <input type="text" class="form-control" id="purpose" required
+                                       placeholder="e.g., Home renovation, Vehicle purchase">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/customerLoanApp.js"></script>
 </body>
 </html>

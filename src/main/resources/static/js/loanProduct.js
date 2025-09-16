@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
 
 const messageModal = document.getElementById('messageModal');
 const messageModalText = document.getElementById('modal-message-text');
@@ -7,6 +6,11 @@ const totalLoansCountEl = document.getElementById('total-loans-count');
 const totalUsersCountEl = document.getElementById('total-users-count');
 const addLoanModal = document.getElementById('addLoanModal');
 const loanProductForm = document.getElementById('loanProductForm');
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupEventListeners();
+    fetchAndRenderProducts();
+});
 
 function showMessage(message) {
     messageModalText.textContent = message;
@@ -212,7 +216,4 @@ function setupEventListeners() {
     });
 }
 
-setupEventListeners();
-fetchAndRenderProducts();
 
-});

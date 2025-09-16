@@ -6,8 +6,10 @@ window.onload = async function () {
 
     loanProductsList = await fetchRequest("/api/loanProduct/retrieve/all");
     loanProductsList = loanProductsList.loanProduct;
+
     insertProductsIntoSelectTag("filterByProductSelectTag");
-    insertTableData();
+
+    await setCustomerLoanApplications();
 
     const role = sessionStorage.getItem("role");
     if(role === null || role !== "customer") {
@@ -16,7 +18,15 @@ window.onload = async function () {
     }
 };
 
-setTimeout(() => insertDataIntoStats(), 100);
+async function setCustomerLoanApplications() {
+    loanApplicationsList = await fetchLoanApplicationsForCustomer();
+    sessionStorage.setItem("customerLoanApps", JSON.stringify(loanApplicationsList));
+
+    setTimeout(() => {
+        insertTableData();
+        insertDataIntoStats()
+    }, 100);
+}
 
 async function handleLoanApplicationFormSubmit(event) {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -78,12 +88,14 @@ async function renderTableData(loanApplicationsList) {
         let htmlCode = ``;
 
         loanApplicationsList.forEach((loanApplication, index) => {
+            const loanProductName = (getLoanProductName(loanProductsList, loanApplication.loanProductId));
+            const toolTip = loanProductName === "Unknown" ? "This product might have been deleted by the Admin." : "";
             htmlCode += `
                 <tr id='${index + 1}'>
                     <td>${loanApplication.applicationId}</td>
-                    <td>
+                    <td title='${toolTip}'>
                         <i class="fas fa-${(insertLoanProductIcon(loanProductsList, loanApplication.loanProductId))} text-primary me-2"></i>
-                        ${(getLoanProductName(loanProductsList, loanApplication.loanProductId))}
+                        ${loanProductName}
                     </td>
                     <td>
                         <b>₹ ${loanApplication.loanAmount}</b>
@@ -107,10 +119,6 @@ async function renderTableData(loanApplicationsList) {
 async function insertTableData() {
 
     const tbodyTag = document.getElementById("loanAppTableBody");
-
-    loanApplicationsList = await fetchLoanApplicationsForCustomer();
-
-    sessionStorage.setItem("customerLoanApps", JSON.stringify(loanApplicationsList));
 
     const htmlCode = await renderTableData(loanApplicationsList);
 
