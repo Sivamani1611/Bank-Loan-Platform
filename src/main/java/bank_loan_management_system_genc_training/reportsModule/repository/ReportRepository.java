@@ -1,5 +1,10 @@
 package bank_loan_management_system_genc_training.reportsModule.repository;
 
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApplication;
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApprovalStatus;
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.service.LoanApplicationService;
+import bank_loan_management_system_genc_training.loanProductManagementModule.entity.LoanProduct;
+import bank_loan_management_system_genc_training.loanProductManagementModule.service.LoanProductService;
 import bank_loan_management_system_genc_training.reportsModule.dto.ReportDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,12 +13,20 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class ReportRepository {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private LoanApplicationService loanAppService;
+
+    @Autowired
+    private LoanProductService loanProductService;
+
 
     public ReportDTO getDashboardData() {
         ReportDTO dto = new ReportDTO();
@@ -22,7 +35,6 @@ public class ReportRepository {
         dto.setMonthlyPerformance(new ArrayList<>());
 
         try (Connection conn = getConnection()) {
-            // ... (All existing try-with-resources blocks for database queries) ...
 
             // Approval Rate
             try (Statement stmt = conn.createStatement();
@@ -33,6 +45,32 @@ public class ReportRepository {
                     dto.setApprovalRate(rs.getDouble("approvalRate"));
                 }
             }
+
+
+            List<ReportDTO.LoanDistribution> loanDistributionList = new ArrayList<>();
+
+            Set<LoanApplication> loanApplicationList = loanAppService.findByLoanApprovalStatus(LoanApprovalStatus.APPROVED).getListOfLoanApplications();
+            Iterable<LoanProduct> loanProductList = loanProductService.findAll().getLoanProduct();
+            for (LoanProduct lp : loanProductList){
+                ReportDTO.LoanDistribution ld = new ReportDTO.LoanDistribution();
+                ld.setProduct(lp.getProductName());
+                Integer productId = lp.getLoanProductId();
+                double amount = 0.0;
+                for (LoanApplication la : loanApplicationList) {
+                    if (la.getLoanProductId().equals(productId)) {
+                        amount += la.getLoanAmount();
+                    }
+                }
+                ld.setAmount(amount);
+                loanDistributionList.add(ld);
+            }
+            dto.setLoanDistribution(loanDistributionList);
+
+
+
+
+
+
 
             // Average Loan Amount (approved)
             try (Statement stmt = conn.createStatement();
@@ -106,20 +144,21 @@ public class ReportRepository {
 
             // Loan Distribution (by product)
             List<ReportDTO.LoanDistribution> loanDistributionList = new ArrayList<>();
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT lp.product_name AS product, SUM(la.loan_amount) AS amount " +
-                                 "FROM loan_application la " +
-                                 "JOIN loan_product lp ON la.loan_product_id = lp.loan_product_id " +
-                                 "WHERE la.approval_status='APPROVED' " +
-                                 "GROUP BY lp.product_name"
-                 )) {
-                while (rs.next()) {
-                    ReportDTO.LoanDistribution ld = new ReportDTO.LoanDistribution();
-                    ld.setProduct(rs.getString("product"));
-                    ld.setAmount(rs.getDouble("amount"));
-                    loanDistributionList.add(ld);
+
+            Set<LoanApplication> loanApplicationList = loanAppService.findByLoanApprovalStatus(LoanApprovalStatus.APPROVED).getListOfLoanApplications();
+            Iterable<LoanProduct> loanProductList = loanProductService.findAll().getLoanProduct();
+            for (LoanProduct lp : loanProductList){
+                ReportDTO.LoanDistribution ld = new ReportDTO.LoanDistribution();
+                ld.setProduct(lp.getProductName());
+                Integer productId = lp.getLoanProductId();
+                double amount = 0.0;
+                for (LoanApplication la : loanApplicationList) {
+                    if (la.getLoanProductId().equals(productId)) {
+                        amount += la.getLoanAmount();
+                    }
                 }
+                ld.setAmount(amount);
+                loanDistributionList.add(ld);
             }
             dto.setLoanDistribution(loanDistributionList);
 
