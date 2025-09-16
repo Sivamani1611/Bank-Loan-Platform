@@ -242,7 +242,7 @@
             }
             const loanAppData = await loanAppResponse.json();
 
-            const loanProductResponse = await fetch(`/api/loanApplication/retreive/loanProduct/${loanAppData.loanProductId}`);
+            const loanProductResponse = await fetch(`/api/loanProduct/retrieve/${loanAppData.loanProductId}`);
             if (!loanProductResponse.ok) {
                 alert('Loan product not found. Cannot generate schedule.');
                 return;
@@ -256,6 +256,9 @@
                 tenure: loanProductData.tenure
             };
 
+            console.log('Loan Application Data:', loanAppData);
+            console.log('Loan Product Data:', loanProductData);
+            console.log('Generating schedule with data:', requestBody);
             const generateResponse = await fetch('/api/repayments/generate-schedule', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
