@@ -54,7 +54,7 @@ function renderProductCards(loans) {
                 <div class="loan-card-content space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-medium text-gray-500">Interest Rate</span>
-                        <span class="text-sm font-semibold text-purple-600">${loan.intrestRate}% p.a.</span>
+                        <span class="text-sm font-semibold text-purple-600">${loan.interestRate}% p.a.</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-medium text-gray-500">Loan Amount</span>
@@ -90,7 +90,7 @@ async function saveOrUpdateProduct(event) {
 
     const formData = {
         productName: form.loanName.value,
-        intrestRate: Number(form.intrestRate.value),
+        interestRate: Number(form.interestRate.value),
         minAmount: Number(form.minAmount.value),
         maxAmount: Number(form.maxAmount.value),
         tenure: Number(form.tenure.value),
@@ -165,7 +165,7 @@ async function editProduct(loanId) {
         loanProductForm.loanName.value = loan.productName;
         loanProductForm.minAmount.value = loan.minAmount;
         loanProductForm.maxAmount.value = loan.maxAmount;
-        loanProductForm.intrestRate.value = loan.intrestRate;
+        loanProductForm.interestRate.value = loan.interestRate;
         loanProductForm.tenure.value = loan.tenure;
 
         addLoanModal.classList.remove('hidden');

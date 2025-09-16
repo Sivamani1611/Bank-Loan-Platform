@@ -242,7 +242,7 @@
             }
             const loanAppData = await loanAppResponse.json();
 
-            const loanProductResponse = await fetch(`/api/loanApplication/retreive/loanProduct/${loanAppData.loanProductId}`);
+            const loanProductResponse = await fetch(`/api/loanProduct/retrieve/${loanAppData.loanProductId}`);
             if (!loanProductResponse.ok) {
                 alert('Loan product not found. Cannot generate schedule.');
                 return;
