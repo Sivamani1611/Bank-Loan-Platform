@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,7 +62,7 @@ public class RepaymentService {
                 Repayment repayment = new Repayment();
                 repayment.setLoanApplication(loan);
                 repayment.setAmountDue(monthlyDue);
-                repayment.setDueDate(firstDueDate.plus(i, ChronoUnit.MONTHS)); // Correctly increments by month
+                repayment.setDueDate(firstDueDate.plusMonths(i)); // Correctly increments by month
                 repayment.setPaymentStatus(Repayment.PaymentStatus.PENDING);
 
                 repaymentRepository.save(repayment);
