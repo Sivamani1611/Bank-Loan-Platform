@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     fetchAndRenderProducts();
 
-    validateUserRole();
+    validateUserRole("admin");
 });
 
 function showMessage(message) {
@@ -53,34 +53,33 @@ function renderProductCards(loans) {
     let html = '';
     loans.forEach(loan => {
         html += `
-            <div class="loan-card-container" data-loan-id="${loan.loanProductId}">
-                <div class="loan-card-header">
-                    <h4 class="text-xl font-bold">${loan.productName}</h4>
+        <div class="loan-card-container" data-loan-id="${loan.loanProductId}">
+            <div class="loan-card-header">
+                <h4 class="text-xl font-bold">${loan.productName}</h4>
+            </div>
+            <div class="loan-card-content space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-500">Interest Rate</span>
+                    <span class="text-sm font-semibold text-purple-600">${loan.interestRate}% p.a.</span>
                 </div>
-                <div class="loan-card-content space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-gray-500">Interest Rate</span>
-                        <span class="text-sm font-semibold text-purple-600">${loan.interestRate}% p.a.</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-gray-500">Loan Amount</span>
-                        <span class="text-sm font-semibold text-gray-800">₹${loan.minAmount.toLocaleString()}/₹${loan.maxAmount.toLocaleString()}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-medium text-gray-500">Max Tenure</span>
-                        <span class="text-sm font-semibold text-gray-800">${loan.tenure} Months</span>
-                    </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-500">Loan Amount</span>
+                    <span class="text-sm font-semibold text-gray-800">₹${loan.minAmount.toLocaleString()}/₹${loan.maxAmount.toLocaleString()}</span>
                 </div>
-                <div class="loan-card-footer flex justify-end space-x-2">
-                    <button class="text-blue-600 hover:text-blue-800 transition-colors" data-action="edit" data-id="${loan.loanProductId}">
-                        <i class="fas fa-edit mr-1"></i> Edit
-                    </button>
-                    <button class="text-red-600 hover:text-red-800 transition-colors" data-action="delete" data-id="${loan.loanProductId}">
-                        <i class="fas fa-trash-alt mr-1"></i> Delete
-                    </button>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-500">Max Tenure</span>
+                    <span class="text-sm font-semibold text-gray-800">${loan.tenure} Months</span>
                 </div>
             </div>
-        `;
+            <div class="loan-card-footer flex justify-end space-x-2">
+                <button class="text-blue-600 hover:text-blue-800 transition-colors" data-action="edit" data-id="${loan.loanProductId}">
+                    <i class="fas fa-edit mr-1"></i> Edit
+                </button>
+                <button class="text-red-600 hover:text-red-800 transition-colors" data-action="delete" data-id="${loan.loanProductId}">
+                    <i class="fas fa-trash-alt mr-1"></i> Delete
+                </button>
+            </div>
+        </div>`;
     });
 
     loanProductsGrid.innerHTML = html;

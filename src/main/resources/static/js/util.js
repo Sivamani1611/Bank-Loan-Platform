@@ -118,10 +118,10 @@ function generateDate() {
     return applicationDate;
 }
 
-function validateUserRole() {
-    const userRole = sessionStorage.getItem('userRole');
-    if(userRole !== "admin") {
-        alert("You don't have authorization to access this page!!!\nPlease login with an Admin account...");
+function validateUserRole(role) {
+    const userRole = sessionStorage.getItem("role");
+    if(userRole !== role) {
+        alert("You don't have authorization to access this page!!!\nPlease login with an ", role," account...");
         location.href = "/login";
     }
 }
