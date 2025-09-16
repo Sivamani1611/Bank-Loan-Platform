@@ -256,6 +256,9 @@
                 tenure: loanProductData.tenure
             };
 
+            console.log('Loan Application Data:', loanAppData);
+            console.log('Loan Product Data:', loanProductData);
+            console.log('Generating schedule with data:', requestBody);
             const generateResponse = await fetch('/api/repayments/generate-schedule', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
