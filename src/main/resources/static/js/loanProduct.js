@@ -7,10 +7,11 @@ const totalUsersCountEl = document.getElementById('total-users-count');
 const addLoanModal = document.getElementById('addLoanModal');
 const loanProductForm = document.getElementById('loanProductForm');
 
+
 document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     fetchAndRenderProducts();
-
+    document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
     validateUserRole("admin");
 });
 
