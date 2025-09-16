@@ -11,12 +11,15 @@ window.onload = async function () {
 
     await setCustomerLoanApplications();
 
+    document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
+
     const role = sessionStorage.getItem("role");
     if(role === null || role !== "customer") {
         alert("You are unable to access this page!\nPlease login as Customer to access this page.");
         location.href = "/login";
     }
 };
+
 
 async function setCustomerLoanApplications() {
     loanApplicationsList = await fetchLoanApplicationsForCustomer();
