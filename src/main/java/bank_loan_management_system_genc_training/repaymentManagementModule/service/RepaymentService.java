@@ -1,6 +1,7 @@
 package bank_loan_management_system_genc_training.repaymentManagementModule.service;
 
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApplication;
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApprovalStatus;
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.repository.LoanApplicationRepository;
 import bank_loan_management_system_genc_training.loanProductManagementModule.repository.LoanProductRepository;
 import bank_loan_management_system_genc_training.repaymentManagementModule.dto.RepaymentGenerationRequestDTO;
@@ -32,43 +33,41 @@ public class RepaymentService {
     private LoanProductRepository loanProductRepository;
 
     @Transactional
-    public void generateRepaymentSchedule(RepaymentGenerationRequestDTO requestDTO) {
-        Optional<LoanApplication> optionalLoan = loanApplicationRepository.findById(requestDTO.getApplicationId());
+    public void generateRepaymentSchedule(RepaymentGenerationRequestDTO request) {
+        // Step 1: Check loan application status
+        LoanApplication loanApplication = loanApplicationRepository.findById(request.getApplicationId())
+                .orElseThrow(() -> new IllegalArgumentException("Loan application not found."));
 
-        if (optionalLoan.isPresent()) {
-            LoanApplication loan = optionalLoan.get();
+        if (loanApplication.getApprovalStatus() != LoanApprovalStatus.APPROVED) {
+            throw new IllegalStateException("Loan application is not yet approved. Status: " + loanApplication.getApprovalStatus());
+        }
 
-            // Check if a schedule already exists
-            List<Repayment> existingSchedule = repaymentRepository.findByLoanApplicationApplicationId(requestDTO.getApplicationId());
-            if (!existingSchedule.isEmpty()) {
-                throw new IllegalStateException("Repayment schedule for this loan already exists.");
-            }
+        // Step 2: Proceed with generating the schedule (existing logic)
+        BigDecimal principal = request.getLoanAmount();
+        BigDecimal interestRate = request.getInterestRate();
+        Integer tenureInMonths = request.getTenure();
 
-            BigDecimal loanAmount = requestDTO.getLoanAmount();
-            BigDecimal interestRate = requestDTO.getInterestRate();
-            Integer tenure = requestDTO.getTenure();
+        BigDecimal monthlyInterestRate = interestRate.divide(BigDecimal.valueOf(1200), 10, RoundingMode.HALF_UP);
+        BigDecimal emi = principal
+                .multiply(monthlyInterestRate)
+                .divide(BigDecimal.ONE.subtract(BigDecimal.ONE.divide(monthlyInterestRate.add(BigDecimal.ONE).pow(tenureInMonths), 10, RoundingMode.HALF_UP)), 2, RoundingMode.HALF_UP);
 
-            // Calculate total amount with simple interest
-            BigDecimal totalAmount = loanAmount.add(loanAmount.multiply(interestRate).divide(new BigDecimal(100), 2, RoundingMode.HALF_UP));
+        LocalDate nextDueDate = LocalDate.now().plusMonths(1);
+        BigDecimal remainingPrincipal = principal;
 
-            // Calculate monthly installment
-            BigDecimal monthlyDue = totalAmount.divide(new BigDecimal(tenure), 2, RoundingMode.HALF_UP);
+        for (int i = 0; i < tenureInMonths; i++) {
+            BigDecimal interestComponent = remainingPrincipal.multiply(monthlyInterestRate);
+            BigDecimal principalComponent = emi.subtract(interestComponent);
+            remainingPrincipal = remainingPrincipal.subtract(principalComponent);
 
-            // Use the loan application date to determine the first due date
-            LocalDate applicationDate = loan.getApplicationDate().toLocalDate();
-            LocalDate firstDueDate = applicationDate.plusMonths(1);
+            Repayment repayment = new Repayment();
+            repayment.setLoanApplication(loanApplication);
+            repayment.setDueDate(nextDueDate);
+            repayment.setAmountDue(emi);
+            repayment.setPaymentStatus(Repayment.PaymentStatus.PENDING);
+            repaymentRepository.save(repayment);
 
-            for (int i = 0; i < tenure; i++) {
-                Repayment repayment = new Repayment();
-                repayment.setLoanApplication(loan);
-                repayment.setAmountDue(monthlyDue);
-                repayment.setDueDate(firstDueDate.plus(i, ChronoUnit.MONTHS)); // Correctly increments by month
-                repayment.setPaymentStatus(Repayment.PaymentStatus.PENDING);
-
-                repaymentRepository.save(repayment);
-            }
-        } else {
-            throw new IllegalArgumentException("Loan Application not found with ID: " + requestDTO.getApplicationId());
+            nextDueDate = nextDueDate.plusMonths(1);
         }
     }
 
