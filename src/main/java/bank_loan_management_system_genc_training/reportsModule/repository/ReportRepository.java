@@ -9,17 +9,13 @@ import bank_loan_management_system_genc_training.reportsModule.dto.ReportDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.util.*;
 
 @Repository
 public class ReportRepository {
-
-    @Autowired
-    private DataSource dataSource;
 
     @Autowired
     private LoanApplicationService loanAppService;
@@ -27,176 +23,140 @@ public class ReportRepository {
     @Autowired
     private LoanProductService loanProductService;
 
-
     public ReportDTO getDashboardData() {
         ReportDTO dto = new ReportDTO();
-        // Initialize lists to ensure they are never null
-        dto.setLoanDistribution(new ArrayList<>());
-        dto.setMonthlyPerformance(new ArrayList<>());
 
-        try (Connection conn = getConnection()) {
+        // Ensure lists are not null
+        dto.setLoanDistribution(new ArrayList<ReportDTO.LoanDistribution>());
+        dto.setMonthlyPerformance(new ArrayList<ReportDTO.MonthlyPerformance>());
 
-            // Approval Rate
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT (SUM(CASE WHEN approval_status='APPROVED' THEN 1 ELSE 0 END) / COUNT(*)) * 100 AS approvalRate FROM loan_application"
-                 )) {
-                if (rs.next()) {
-                    dto.setApprovalRate(rs.getDouble("approvalRate"));
-                }
+        // Get all loan applications
+        List<LoanApplication> allApplications = (List<LoanApplication>) loanAppService.findAll().getLoanAppIterable();
+
+        // ---------- Approval Rate ----------
+        int totalApplications = allApplications.size();
+        int approvedCount = 0;
+        for (LoanApplication la : allApplications) {
+            if (la.getApprovalStatus() == LoanApprovalStatus.APPROVED) {
+                approvedCount++;
             }
-
-
-            List<ReportDTO.LoanDistribution> loanDistributionList = new ArrayList<>();
-
-            Set<LoanApplication> loanApplicationList = loanAppService.findByLoanApprovalStatus(LoanApprovalStatus.APPROVED).getListOfLoanApplications();
-            Iterable<LoanProduct> loanProductList = loanProductService.findAll().getLoanProduct();
-            for (LoanProduct lp : loanProductList){
-                ReportDTO.LoanDistribution ld = new ReportDTO.LoanDistribution();
-                ld.setProduct(lp.getProductName());
-                Integer productId = lp.getLoanProductId();
-                double amount = 0.0;
-                for (LoanApplication la : loanApplicationList) {
-                    if (la.getLoanProductId().equals(productId)) {
-                        amount += la.getLoanAmount();
-                    }
-                }
-                ld.setAmount(amount);
-                loanDistributionList.add(ld);
-            }
-            dto.setLoanDistribution(loanDistributionList);
-
-
-
-
-
-
-
-            // Average Loan Amount (approved)
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT AVG(loan_amount) AS avgloan_amount FROM loan_application WHERE approval_status='APPROVED'"
-                 )) {
-                if (rs.next()) {
-                    dto.setAvgLoanAmount(rs.getDouble("avgloan_amount"));
-                }
-            }
-
-            // Total Approved Loans
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT COUNT(*) AS totalApprovedLoans FROM loan_application WHERE approval_status='APPROVED'"
-                 )) {
-                if (rs.next()) {
-                    dto.setTotalApprovedLoans(rs.getInt("totalApprovedLoans"));
-                }
-            }
-
-            // Total Pending Loans
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT COUNT(*) AS totalPendingLoans FROM loan_application WHERE approval_status='PENDING'"
-                 )) {
-                if (rs.next()) {
-                    dto.setTotalPendingLoans(rs.getInt("totalPendingLoans"));
-                }
-            }
-
-            // Total Repayments Made (COMPLETED)
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT COUNT(*) AS totalRepaymentsMade FROM repayment WHERE payment_status='COMPLETED'"
-                 )) {
-                if (rs.next()) {
-                    dto.setTotalRepaymentsMade(rs.getInt("totalRepaymentsMade"));
-                }
-            }
-
-            // Remaining Repayments (PENDING)
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT COUNT(*) AS remainingRepayments FROM repayment WHERE payment_status='PENDING'"
-                 )) {
-                if (rs.next()) {
-                    dto.setRemainingRepayments(rs.getInt("remainingRepayments"));
-                }
-            }
-
-            // Active Customers (with at least one approved loan)
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT COUNT(DISTINCT customer_id) AS activeCustomers FROM loan_application WHERE approval_status='APPROVED'"
-                 )) {
-                if (rs.next()) {
-                    dto.setActiveCustomers(rs.getInt("activeCustomers"));
-                }
-            }
-
-            // Active Products (with at least one approved loan)
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT COUNT(DISTINCT loan_product_id) AS activeProducts FROM loan_application WHERE approval_status='APPROVED'"
-                 )) {
-                if (rs.next()) {
-                    dto.setActiveProducts(rs.getInt("activeProducts"));
-                }
-            }
-
-            // Loan Distribution (by product)
-            List<ReportDTO.LoanDistribution> loanDistributionList = new ArrayList<>();
-
-            Set<LoanApplication> loanApplicationList = loanAppService.findByLoanApprovalStatus(LoanApprovalStatus.APPROVED).getListOfLoanApplications();
-            Iterable<LoanProduct> loanProductList = loanProductService.findAll().getLoanProduct();
-            for (LoanProduct lp : loanProductList){
-                ReportDTO.LoanDistribution ld = new ReportDTO.LoanDistribution();
-                ld.setProduct(lp.getProductName());
-                Integer productId = lp.getLoanProductId();
-                double amount = 0.0;
-                for (LoanApplication la : loanApplicationList) {
-                    if (la.getLoanProductId().equals(productId)) {
-                        amount += la.getLoanAmount();
-                    }
-                }
-                ld.setAmount(amount);
-                loanDistributionList.add(ld);
-            }
-            dto.setLoanDistribution(loanDistributionList);
-
-            // Monthly Performance (last 6 months)
-            List<ReportDTO.MonthlyPerformance> monthlyPerformanceList = new ArrayList<>();
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(
-                         "SELECT DATE_FORMAT(application_date, '%b %Y') AS month, " +
-                                 "COUNT(*) AS applications, " +
-                                 "SUM(CASE WHEN approval_status='APPROVED' THEN 1 ELSE 0 END) AS approved, " +
-                                 "CONCAT(ROUND((SUM(CASE WHEN approval_status='APPROVED' THEN 1 ELSE 0 END)/COUNT(*))*100), '%') AS approvalRate, " +
-                                 "SUM(CASE WHEN approval_status='APPROVED' THEN loan_amount ELSE 0 END) AS amount " +
-                                 "FROM loan_application " +
-                                 "GROUP BY month " +
-                                 "ORDER BY MIN(application_date) DESC LIMIT 6"
-                 )) {
-                while (rs.next()) {
-                    ReportDTO.MonthlyPerformance mp = new ReportDTO.MonthlyPerformance();
-                    mp.setMonth(rs.getString("month"));
-                    mp.setApplications(rs.getInt("applications"));
-                    mp.setApproved(rs.getInt("approved"));
-                    mp.setApprovalRate(rs.getString("approvalRate"));
-                    mp.setAmount(rs.getDouble("amount"));
-                    monthlyPerformanceList.add(mp);
-                }
-            }
-            dto.setMonthlyPerformance(monthlyPerformanceList);
-
-        } catch (SQLException e) {
-            System.err.println("Database error while fetching dashboard data.");
-            e.printStackTrace();
-            // Re-throw as a RuntimeException to be handled by the service/controller layer
-            throw new RuntimeException("Error fetching dashboard data from the database", e);
         }
-        return dto;
-    }
+        if (totalApplications > 0) {
+            dto.setApprovalRate((approvedCount * 100.0) / totalApplications);
+        } else {
+            dto.setApprovalRate(0.0);
+        }
 
-    private Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+        // ---------- Loan Distribution ----------
+        List<ReportDTO.LoanDistribution> loanDistributionList = new ArrayList<ReportDTO.LoanDistribution>();
+        Iterable<LoanProduct> loanProductList = loanProductService.findAll().getLoanProduct();
+
+        for (LoanProduct lp : loanProductList) {
+            ReportDTO.LoanDistribution ld = new ReportDTO.LoanDistribution();
+            ld.setProduct(lp.getProductName());
+            double amount = 0.0;
+
+            for (LoanApplication la : allApplications) {
+                if (la.getApprovalStatus() == LoanApprovalStatus.APPROVED &&
+                        la.getLoanProductId().equals(lp.getLoanProductId())) {
+                    amount += la.getLoanAmount();
+                }
+            }
+            ld.setAmount(amount);
+            loanDistributionList.add(ld);
+        }
+        dto.setLoanDistribution(loanDistributionList);
+
+        // ---------- Average Loan Amount (Approved only) ----------
+        double totalApprovedAmount = 0.0;
+        for (LoanApplication la : allApplications) {
+            if (la.getApprovalStatus() == LoanApprovalStatus.APPROVED) {
+                totalApprovedAmount += la.getLoanAmount();
+            }
+        }
+        if (approvedCount > 0) {
+            dto.setAvgLoanAmount(totalApprovedAmount / approvedCount);
+        } else {
+            dto.setAvgLoanAmount(0.0);
+        }
+
+        // ---------- Loan Counts ----------
+        dto.setTotalApprovedLoans(approvedCount);
+
+        int pendingCount = 0;
+        for (LoanApplication la : allApplications) {
+            if (la.getApprovalStatus() == LoanApprovalStatus.PENDING) {
+                pendingCount++;
+            }
+        }
+        dto.setTotalPendingLoans(pendingCount);
+
+        // ---------- Active Customers ----------
+        Set<Integer> activeCustomers = new HashSet<Integer>();
+        for (LoanApplication la : allApplications) {
+            if (la.getApprovalStatus() == LoanApprovalStatus.APPROVED) {
+                activeCustomers.add(la.getCustomerId());
+            }
+        }
+        dto.setActiveCustomers(activeCustomers.size());
+
+        // ---------- Active Products ----------
+        Set<Integer> activeProducts = new HashSet<Integer>();
+        for (LoanApplication la : allApplications) {
+            if (la.getApprovalStatus() == LoanApprovalStatus.APPROVED) {
+                activeProducts.add(la.getLoanProductId());
+            }
+        }
+        dto.setActiveProducts(activeProducts.size());
+
+        // ---------- Monthly Performance (last 6 months) ----------
+        List<ReportDTO.MonthlyPerformance> monthlyPerformanceList = new ArrayList<ReportDTO.MonthlyPerformance>();
+        YearMonth currentMonth = YearMonth.now();
+
+        for (int i = 0; i < 6; i++) {
+            YearMonth month = currentMonth.minusMonths(i);
+
+            int applications = 0;
+            int approved = 0;
+            double approvedAmount = 0.0;
+
+            for (LoanApplication la : allApplications) {
+                Date rawDate = la.getApplicationDate(); // java.util.Date
+                if (rawDate == null) {
+                    continue;
+                }
+                LocalDate appDate = new java.sql.Date(rawDate.getTime()).toLocalDate();
+
+                if (appDate.getMonthValue() == month.getMonthValue() &&
+                        appDate.getYear() == month.getYear()) {
+
+                    applications++;
+
+                    if (la.getApprovalStatus() == LoanApprovalStatus.APPROVED) {
+                        approved++;
+                        approvedAmount += la.getLoanAmount();
+                    }
+                }
+            }
+
+            ReportDTO.MonthlyPerformance mp = new ReportDTO.MonthlyPerformance();
+            mp.setMonth(month.getMonth().name() + " " + month.getYear());
+            mp.setApplications(applications);
+            mp.setApproved(approved);
+
+            if (applications > 0) {
+                double rate = (approved * 100.0) / applications;
+                mp.setApprovalRate(String.format("%.2f%%", rate));
+            } else {
+                mp.setApprovalRate("0%");
+            }
+
+            mp.setAmount(approvedAmount);
+            monthlyPerformanceList.add(mp);
+        }
+
+        dto.setMonthlyPerformance(monthlyPerformanceList);
+
+        return dto;
     }
 }
