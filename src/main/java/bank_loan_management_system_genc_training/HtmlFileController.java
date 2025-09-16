@@ -35,17 +35,17 @@ public class HtmlFileController {
         return new ModelAndView("CustomerLoanApplicationModule");
     }
 
-    @GetMapping("/customer/loanProduct")
+    @GetMapping("/admin/loanProduct")
     public ModelAndView showCustomerLoanProductPage() {
-        return new ModelAndView("CustomerLoanProductModule");
+        return new ModelAndView("AdminLoanProductModule");
     }
 
-    @GetMapping("/repayment")
+    @GetMapping("/customer/repayment")
     public  ModelAndView showReportsPage() {
         return new ModelAndView("repayment");
     }
 
-    @GetMapping("/reports")
+    @GetMapping("/admin/reports")
     public  ModelAndView showRepaymentPage() {
         return new ModelAndView("reports");
     }

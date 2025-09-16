@@ -62,10 +62,13 @@ public class RepaymentController {
             repaymentService.generateRepaymentSchedule(request);
             return ResponseEntity.status(HttpStatus.CREATED).body("Repayment schedule generated successfully.");
         } catch (IllegalArgumentException e) {
+            // Catches "Loan application not found" error
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (IllegalStateException e) {
+            // Catches "Loan application not approved" error
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
+            // Catches any other unexpected errors
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
