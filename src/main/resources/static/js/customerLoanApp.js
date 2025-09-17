@@ -4,6 +4,8 @@ let loanApplicationsList = [];
 
 window.onload = async function () {
 
+    validateUserRole("customer");
+
     loanProductsList = await fetchRequest("/api/loanProduct/retrieve/all");
     loanProductsList = loanProductsList.loanProduct;
 
@@ -18,7 +20,6 @@ window.onload = async function () {
 
     document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
 
-    validateUserRole("customer");
 };
 
 async function setCustomerLoanApplications() {
