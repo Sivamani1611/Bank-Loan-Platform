@@ -20,7 +20,7 @@ async function handleLoginFormSubmit(event) {
         sessionStorage.setItem("userEmail", userObj.email);
 
         if(userObj.role.toLowerCase() === "customer") {
-            location.href = "/customer/loanApplication"";
+            location.href = "/customer/loanApplication";
         } else if(userObj.role.toLowerCase() === "admin") {
             location.href = "/admin/loanApplication";
         } else {

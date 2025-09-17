@@ -11,6 +11,11 @@ window.onload = async function () {
 
     await setCustomerLoanApplications();
 
+    setTimeout(() => {
+            insertTableData();
+            insertDataIntoStats()
+        }, 100);
+
     document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
 
     validateUserRole("customer");
@@ -18,11 +23,6 @@ window.onload = async function () {
 
 async function setCustomerLoanApplications() {
     loanApplicationsList = await fetchLoanApplicationsForCustomer();
-
-    setTimeout(() => {
-        insertTableData();
-        insertDataIntoStats()
-    }, 100);
 }
 
 async function handleLoanApplicationFormSubmit(event) {
@@ -116,6 +116,8 @@ async function renderTableData(loanAppsList) {
 async function insertTableData() {
 
     const tbodyTag = document.getElementById("loanAppTableBody");
+
+    await setCustomerLoanApplications();
 
     const htmlCode = await renderTableData(loanApplicationsList);
 
