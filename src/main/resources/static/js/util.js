@@ -118,17 +118,10 @@ function generateDate() {
     return applicationDate;
 }
 
-<<<<<<< Updated upstream
 function validateUserRole(role) {
     const userRole = sessionStorage.getItem("role");
     if(userRole.toLowerCase() !== role.toLowerCase()) {
         alert("You don't have authorization to access this page!!!\nPlease login with an ", role," account...");
-=======
-function validateUserRole() {
-    const userRole = sessionStorage.getItem('userRole');
-    if(userRole !== "admin") {
-        alert("You don't have authorization to access this page!!!\nPlease login with an Admin account...");
->>>>>>> Stashed changes
         location.href = "/login";
     }
 }

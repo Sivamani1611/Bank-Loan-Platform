@@ -1,5 +1,6 @@
 async function loadDashboardData() {
     document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
+    validateUserRole("admin");
     try {
         const response = await fetch('/api/admin/loanApplications');
         if (!response.ok) {
