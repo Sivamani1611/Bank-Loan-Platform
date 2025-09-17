@@ -1,3 +1,4 @@
+
 const messageModal = document.getElementById('messageModal');
 const messageModalText = document.getElementById('modal-message-text');
 const loanProductsGrid = document.getElementById('loan-products-grid');
@@ -39,6 +40,14 @@ async function fetchAndRenderProducts() {
         const responseData = await response.json();
         const loans = responseData.loanProduct;
 
+        //Getting the Number of Active Customers
+        const customerUrl = '/api/reports/dashboard-data';
+        const customersInformationData = await fetch(customerUrl);
+        if(!customersInformationData.ok){
+            console.log('HTTP error! status: ', customersInformationData.status);
+        }
+        const customerData = await customersInformationData.json();
+        totalUsersCountEl.textContent = customerData.activeCustomers;
         renderProductCards(loans);
     } catch (error) {
         console.error('Failed to fetch loan products:', error);
@@ -94,7 +103,7 @@ function renderProductCards(loans) {
 
     loanProductsGrid.innerHTML = html;
     totalLoansCountEl.textContent = loans.length;
-    totalUsersCountEl.textContent = '1,234';
+
 }
 
 async function saveOrUpdateProduct(event) {
