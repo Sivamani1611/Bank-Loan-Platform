@@ -120,7 +120,7 @@ function generateDate() {
 
 function validateUserRole(role) {
     const userRole = sessionStorage.getItem("role");
-    if(userRole !== role) {
+    if(userRole.toLowerCase() !== role.toLowerCase()) {
         alert("You don't have authorization to access this page!!!\nPlease login with an ", role," account...");
         location.href = "/login";
     }
