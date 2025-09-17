@@ -42,7 +42,7 @@ public class HtmlFileController {
 
     @GetMapping("/customer/repayment")
     public  ModelAndView showReportsPage() {
-        return new ModelAndView("repayment");
+        return new ModelAndView("CustomerRepayment");
     }
 
     @GetMapping("/admin/reports")
