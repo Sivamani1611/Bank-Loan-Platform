@@ -2,12 +2,12 @@ package bank_loan_management_system_genc_training.loanApplicationManagementModul
 
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApplication;
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApprovalStatus;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
 import java.util.Set;
 
-public interface LoanApplicationRepository extends CrudRepository<LoanApplication, Integer> {
+public interface LoanApplicationRepository extends JpaRepository<LoanApplication, Integer> {
 
     Set<LoanApplication> findByCustomerId(Integer customerId);
 

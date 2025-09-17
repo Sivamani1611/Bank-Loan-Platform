@@ -6,7 +6,6 @@ import bank_loan_management_system_genc_training.loanApplicationManagementModule
 import bank_loan_management_system_genc_training.loanProductManagementModule.entity.LoanProduct;
 import bank_loan_management_system_genc_training.loanProductManagementModule.service.LoanProductServiceImpl;
 import bank_loan_management_system_genc_training.reportsModule.dto.ReportDTO;
-import bank_loan_management_system_genc_training.reportsModule.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +15,6 @@ import java.util.*;
 
 @Service
 public class ReportServiceImpl implements ReportService {
-    private final ReportRepository reportRepository;
-
-    @Autowired
-    public ReportServiceImpl(ReportRepository reportRepository) {
-        this.reportRepository = reportRepository;
-    }
 
     @Autowired
     private LoanAppServiceImpl loanAppService;
