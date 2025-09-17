@@ -17,9 +17,17 @@ async function handleLoginFormSubmit(event) {
 
     if(userObj !== null && password === userObj.password) {
         sessionStorage.setItem("role", userObj.role);
-        const endPoint = userObj.role === "customer" ? "customer/loanApplication": "admin/loanApplication";
-        location.href = endPoint;
         sessionStorage.setItem("userEmail", userObj.email);
+
+        if(userObj.role.toLowerCase() === "customer") {
+            location.href = "/customer/loanApplication"";
+        } else if(userObj.role.toLowerCase() === "admin") {
+            location.href = "/admin/loanApplication";
+        } else {
+            alert("Unknown user role. Cannot redirect.");
+            location.href = "/login";
+        }
+
     } else {
         errorTag.innerHTML = "<span class='text-danger'>Invalid Login Credentials.</span>";
     }
