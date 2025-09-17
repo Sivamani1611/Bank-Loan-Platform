@@ -2,7 +2,7 @@ package bank_loan_management_system_genc_training.customerModule.controller;
 
 
 import bank_loan_management_system_genc_training.customerModule.entity.Customer;
-import bank_loan_management_system_genc_training.customerModule.service.CustomerService;
+import bank_loan_management_system_genc_training.customerModule.service.CustomerServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     @Autowired
-    private CustomerService customerService;
+    private CustomerServiceImpl customerService;
 
     @PostMapping("/save")
     public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {

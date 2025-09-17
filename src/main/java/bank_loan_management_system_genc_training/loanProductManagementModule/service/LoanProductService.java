@@ -2,46 +2,16 @@ package bank_loan_management_system_genc_training.loanProductManagementModule.se
 
 import bank_loan_management_system_genc_training.loanProductManagementModule.dto.LoanProductDTO;
 import bank_loan_management_system_genc_training.loanProductManagementModule.entity.LoanProduct;
-import bank_loan_management_system_genc_training.loanProductManagementModule.repository.LoanProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+public interface LoanProductService {
 
-@Service
-public class LoanProductService {
+    LoanProduct save(LoanProduct loanProduct);
 
-    @Autowired
-    private LoanProductRepository loanProductRepository;
+    void deleteByLoanProductId(Integer loanProductId);
 
-    public LoanProduct save(LoanProduct loanProduct){
-        return loanProductRepository.save(loanProduct);
-    }
+    LoanProductDTO findAll();
 
-    public void deleteByLoanProductId(Integer loanProductId){
-        loanProductRepository.deleteById(loanProductId);
-    }
+    LoanProduct findByLoanProductId(Integer loanProductId);
 
-    public LoanProductDTO findAll(){
-        LoanProductDTO loanProductDTO = new LoanProductDTO();
-        loanProductDTO.setLoanProduct(loanProductRepository.findAll());
-        return loanProductDTO;
-    }
-
-    public LoanProduct findByLoanProductId(Integer loanProductId){
-        Optional<LoanProduct> loanProductOpt = loanProductRepository.findByLoanProductId(loanProductId);
-        return loanProductOpt.orElse(null);
-    }
-
-    public LoanProduct updateLoanProduct(Integer loanProductId, LoanProduct updatedLoanProduct){
-        Optional<LoanProduct> presentLoanProduct = loanProductRepository.findByLoanProductId(loanProductId);
-        LoanProduct originalLoanProduct = presentLoanProduct.get();
-        originalLoanProduct.setProductName(updatedLoanProduct.getProductName());
-        originalLoanProduct.setInterestRate(updatedLoanProduct.getInterestRate());
-        originalLoanProduct.setTenure(updatedLoanProduct.getTenure());
-        originalLoanProduct.setMaxAmount(updatedLoanProduct.getMaxAmount());
-        originalLoanProduct.setMinAmount(updatedLoanProduct.getMinAmount());
-        return loanProductRepository.save(originalLoanProduct);
-    }
-
+    LoanProduct updateLoanProduct(Integer loanProductId, LoanProduct updatedLoanProduct);
 }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class LoanApplicationAdminService {
+public class LoanAppAdminServiceImpl implements LoanAppAdminService {
 
     @Autowired
     private LoanApplicationRepository loanApplicationRepository;
@@ -103,4 +103,5 @@ public class LoanApplicationAdminService {
 
         return null;
     }
+
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
-public class LoanApplicationService {
+public class LoanAppServiceImpl implements LoanAppService {
 
     @Autowired
     private LoanApplicationRepository loanApplicationRepo;

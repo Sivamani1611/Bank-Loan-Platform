@@ -5,7 +5,7 @@ import bank_loan_management_system_genc_training.customerManagementTestCases.Use
 import bank_loan_management_system_genc_training.customerModule.entity.Customer;
 import bank_loan_management_system_genc_training.customerModule.entity.KYCStatus;
 import bank_loan_management_system_genc_training.customerModule.entity.User;
-import bank_loan_management_system_genc_training.customerModule.service.CustomerService;
+import bank_loan_management_system_genc_training.customerModule.service.CustomerServiceImpl;
 import org.junit.jupiter.api.Assertions; // Corrected import for JUnit 5
 import org.junit.jupiter.api.BeforeEach; // Corrected import for JUnit 5
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension; // Corrected import for JUnit
 class BankLoanManagementSystemGencTrainingApplicationTests {
 
     @Mock
-    CustomerService customerService;
+    CustomerServiceImpl customerService;
 
     @Mock
     CustomerTestCases customerTestCases;

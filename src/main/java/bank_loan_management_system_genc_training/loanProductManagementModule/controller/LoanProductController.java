@@ -3,7 +3,7 @@ package bank_loan_management_system_genc_training.loanProductManagementModule.co
 
 import bank_loan_management_system_genc_training.loanProductManagementModule.dto.LoanProductDTO;
 import bank_loan_management_system_genc_training.loanProductManagementModule.entity.LoanProduct;
-import bank_loan_management_system_genc_training.loanProductManagementModule.service.LoanProductService;
+import bank_loan_management_system_genc_training.loanProductManagementModule.service.LoanProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoanProductController {
 
     @Autowired
-    private LoanProductService loanProductService;
+    private LoanProductServiceImpl loanProductServiceImpl;
 
 
 /*
@@ -30,32 +30,32 @@ public class LoanProductController {
     @PostMapping("/save")
     public ResponseEntity<LoanProduct> save(@RequestBody LoanProduct loanProduct){
         System.out.println("Received Data to Save: "+ loanProduct.getProductName());
-        return ResponseEntity.ok().body(loanProductService.save(loanProduct));
+        return ResponseEntity.ok().body(loanProductServiceImpl.save(loanProduct));
     }
 
     @GetMapping("/retrieve/all")
     public ResponseEntity<LoanProductDTO> fetechAll(){
         System.out.println("Request to Retrieve all the Loan Products Data");
-        return ResponseEntity.ok().body(loanProductService.findAll());
+        return ResponseEntity.ok().body(loanProductServiceImpl.findAll());
     }
 
     @DeleteMapping("/delete/{loanProductId}")
     public void deleteLoanProduct(@PathVariable Integer loanProductId){
         System.out.println("Received Request to Delete LoanProduct: "+loanProductId);
-        loanProductService.deleteByLoanProductId(loanProductId);
+        loanProductServiceImpl.deleteByLoanProductId(loanProductId);
     }
 
     @GetMapping("/retrieve/{loanProductId}")
     public ResponseEntity<LoanProduct> fetechByProductId(@PathVariable Integer loanProductId){
         System.out.println("Request to retrieve data of: "+loanProductId);
-        return ResponseEntity.ok().body(loanProductService.findByLoanProductId(loanProductId));
+        return ResponseEntity.ok().body(loanProductServiceImpl.findByLoanProductId(loanProductId));
     }
 
     @PostMapping("/update/{loanProductId}")
     public ResponseEntity<LoanProduct> updateLoanProduct(@PathVariable Integer loanProductId, @RequestBody LoanProduct loanProduct){
         System.out.println("request to update the LoanProductId: "+loanProductId);
         System.out.println("Request to change the LoanProduct details into: "+loanProduct.getProductName());
-        LoanProduct updatedProduct = loanProductService.updateLoanProduct(loanProductId,loanProduct);
+        LoanProduct updatedProduct = loanProductServiceImpl.updateLoanProduct(loanProductId,loanProduct);
         return new ResponseEntity<>(updatedProduct,HttpStatus.OK);
     }
 

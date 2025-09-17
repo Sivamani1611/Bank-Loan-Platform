@@ -3,7 +3,7 @@ package bank_loan_management_system_genc_training.loanApplicationManagementModul
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.dto.LoanApplicationDashboardData;
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApplication;
 import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApprovalStatus;
-import bank_loan_management_system_genc_training.loanApplicationManagementModule.service.LoanApplicationAdminService;
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.service.LoanAppAdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class LoanApplicationAdminController {
 
     @Autowired
-    private LoanApplicationAdminService loanApplicationAdminService;
+    private LoanAppAdminServiceImpl loanAppAdminServiceImpl;
 
     @GetMapping
     public ResponseEntity<LoanApplicationDashboardData> getAllApplications() {
-        LoanApplicationDashboardData dashboardData = loanApplicationAdminService.getAdminDashboardData();
+        LoanApplicationDashboardData dashboardData = loanAppAdminServiceImpl.getAdminDashboardData();
         return ResponseEntity.ok(dashboardData);
     }
 
@@ -33,7 +33,7 @@ public class LoanApplicationAdminController {
             return ResponseEntity.badRequest().build();
         }
 
-        LoanApplication updatedLoan = loanApplicationAdminService.updateLoanStatus(applicationId, status);
+        LoanApplication updatedLoan = loanAppAdminServiceImpl.updateLoanStatus(applicationId, status);
 
         if (updatedLoan != null) {
             return ResponseEntity.ok(updatedLoan);

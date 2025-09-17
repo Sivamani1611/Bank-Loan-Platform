@@ -1,0 +1,13 @@
+package bank_loan_management_system_genc_training.loanApplicationManagementModule.service;
+
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.dto.LoanApplicationDashboardData;
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApplication;
+import bank_loan_management_system_genc_training.loanApplicationManagementModule.entity.LoanApprovalStatus;
+
+public interface LoanAppAdminService {
+
+    LoanApplicationDashboardData getAdminDashboardData();
+
+    LoanApplication updateLoanStatus(Integer applicationId, LoanApprovalStatus newStatus);
+
+}
