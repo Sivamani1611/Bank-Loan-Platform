@@ -6,6 +6,7 @@ window.addEventListener('load', loadDashboardData);
 let statusSummaryChart;
 
 async function loadDashboardData() {
+  document.getElementById("userDisplayName").innerText = sessionStorage.getItem("userEmail");
   try {
       const response = await fetch('/api/reports/dashboard-data');
       if (!response.ok) {
