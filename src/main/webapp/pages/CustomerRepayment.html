@@ -123,21 +123,21 @@
             <div class="dashboard-card">
                 <div class="icon text-primary"><i class="fas fa-dollar-sign"></i></div>
                 <div class="title">Total Loan Amount</div>
-                <div class="value" id="totalLoanAmount">$0.00</div>
+                <div class="value" id="totalLoanAmount">₹0.00</div>
             </div>
         </div>
         <div class="col">
             <div class="dashboard-card">
                 <div class="icon text-danger"><i class="fas fa-wallet"></i></div>
                 <div class="title">Outstanding Balance</div>
-                <div class="value" id="outstandingBalance">$0.00</div>
+                <div class="value" id="outstandingBalance">₹0.00</div>
             </div>
         </div>
         <div class="col">
             <div class="dashboard-card">
                 <div class="icon text-success"><i class="fas fa-check-circle"></i></div>
                 <div class="title">Total Paid</div>
-                <div class="value" id="totalPaid">$0.00</div>
+                <div class="value" id="totalPaid">₹0.00</div>
             </div>
         </div>
         <div class="col">
@@ -210,9 +210,9 @@
     });
 
     function showLoading() {
-        document.getElementById('totalLoanAmount').textContent = '$0.00';
-        document.getElementById('outstandingBalance').textContent = '$0.00';
-        document.getElementById('totalPaid').textContent = '$0.00';
+        document.getElementById('totalLoanAmount').textContent = '₹0.00';
+        document.getElementById('outstandingBalance').textContent = '₹0.00';
+        document.getElementById('totalPaid').textContent = '₹0.00';
         document.getElementById('remainingInstallments').textContent = '0';
         document.getElementById('loanProductName').textContent = '-';
         document.getElementById('repaymentTableBody').innerHTML = '';
@@ -225,7 +225,7 @@
             const loanAppResponse = await fetch(`/api/loanApplication/retreive/${applicationId}`);
             if (loanAppResponse.ok) {
                 const loanAppData = await loanAppResponse.json();
-                document.getElementById('totalLoanAmount').textContent = `$${parseFloat(loanAppData.loanAmount).toFixed(2)}`;
+                document.getElementById('totalLoanAmount').textContent = `₹${parseFloat(loanAppData.loanAmount).toFixed(2)}`;
             } else {
                 document.getElementById('totalLoanAmount').textContent = 'N/A';
             }
@@ -233,9 +233,9 @@
             const balanceResponse = await fetch(`/api/repayments/outstanding-balance/${applicationId}`);
             if (balanceResponse.ok && balanceResponse.status !== 204) {
                 const balanceData = await balanceResponse.json();
-                document.getElementById('outstandingBalance').textContent = `$${parseFloat(balanceData).toFixed(2)}`;
+                document.getElementById('outstandingBalance').textContent = `₹${parseFloat(balanceData).toFixed(2)}`;
             } else {
-                document.getElementById('outstandingBalance').textContent = '$0.00';
+                document.getElementById('outstandingBalance').textContent = '₹0.00';
             }
 
             const scheduleResponse = await fetch(`/api/repayments/schedule/${applicationId}`);
@@ -247,8 +247,8 @@
                     const outstandingAmount = scheduleData.filter(r => r.paymentStatus === 'PENDING').reduce((sum, r) => sum + r.amountDue, 0);
                     const remainingInstallments = scheduleData.filter(r => r.paymentStatus === 'PENDING').length;
 
-                    document.getElementById('totalPaid').textContent = `$${totalPaid.toFixed(2)}`;
-                    document.getElementById('outstandingBalance').textContent = `$${outstandingAmount.toFixed(2)}`;
+                    document.getElementById('totalPaid').textContent = `₹${totalPaid.toFixed(2)}`;
+                    document.getElementById('outstandingBalance').textContent = `₹${outstandingAmount.toFixed(2)}`;
                     document.getElementById('remainingInstallments').textContent = remainingInstallments;
                     document.getElementById('loanProductName').textContent = scheduleData[0].loanProductName;
 
@@ -259,7 +259,7 @@
                         row.innerHTML = `
                             <td>${repayment.loanProductName}</td>
                             <td>${repayment.dueDate}</td>
-                            <td>$${parseFloat(repayment.amountDue).toFixed(2)}</td>
+                            <td>₹${parseFloat(repayment.amountDue).toFixed(2)}</td>
                             <td>${repayment.paymentDate || "-"}</td>
                             <td><span class="badge bg-${repayment.paymentStatus === 'COMPLETED' ? 'success' : 'warning'}">${repayment.paymentStatus}</span></td>
                             <td>

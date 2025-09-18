@@ -1,4 +1,4 @@
-
+validateUserRole("admin");
 let loanDistributionChart;
 
 window.addEventListener('load', loadDashboardData);
